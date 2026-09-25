@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>امتحان تحديد المستوى | Placement Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-900:#1b3a63;
+    --blue-700:#2b5a92;
+    --blue-500:#4c7fc0;
+    --blue-200:#c9def2;
+    --blue-100:#e8f1fb;
+    --pink-600:#d1638f;
+    --pink-400:#e792b0;
+    --pink-200:#f6d2e0;
+    --pink-100:#fbe9f0;
+    --ink:#233042;
+    --muted:#5b6b80;
+    --card:#ffffff;
+    --good:#2f9e68;
+    --good-bg:#e6f7ee;
+    --bad:#d64a4a;
+    --bad-bg:#fdeaea;
+    --radius:18px;
+    --shadow:0 10px 30px rgba(43,90,146,0.12);
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    box-sizing:border-box;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eaf1fb; --muted:#a9b8cc; --card:#152238;
+      --blue-100:#182a44; --blue-200:#20395c; --pink-100:#2a1c28; --pink-200:#3a2432;
+      --good-bg:#123626; --bad-bg:#3a1e1e;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eaf1fb; --muted:#a9b8cc; --card:#152238;
+    --blue-100:#182a44; --blue-200:#20395c; --pink-100:#2a1c28; --pink-200:#3a2432;
+    --good-bg:#123626; --bad-bg:#3a1e1e;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:'Cairo',system-ui,sans-serif;
+    background:linear-gradient(160deg,var(--blue-100) 0%, var(--pink-100) 100%);
+    color:var(--ink);
+    min-height:100%;
+    scroll-padding-top:env(safe-area-inset-top,0px);
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:28px 18px 60px;}
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px;
+    position:sticky;top:0;
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--blue-200);
+    z-index:20;
+  }
+  :root[data-theme="dark"] .topbar{background:rgba(21,34,56,0.8);}
+  .brand{font-weight:800;color:var(--blue-700);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .backbtn{
+    border:none;background:var(--blue-500);color:#fff;padding:8px 16px;
+    border-radius:999px;font-family:inherit;font-weight:600;font-size:0.9rem;cursor:pointer;
+  }
+  .backbtn:active{transform:scale(0.97);}
+  .hidden{display:none !important;}
+
+  /* HOME */
+  .hero{text-align:center;padding:36px 10px 10px;}
+  .hero h1{
+    font-size:1.9rem;margin:0 0 6px;color:var(--blue-900);font-weight:800;
+  }
+  .hero p{color:var(--muted);margin:0 0 28px;font-size:1rem;}
+  .choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:560px){.choice-grid{grid-template-columns:1fr;}}
+  .choice-card{
+    border-radius:var(--radius);padding:28px 20px;cursor:pointer;
+    color:#fff;box-shadow:var(--shadow);border:none;font-family:inherit;
+    text-align:right;position:relative;overflow:hidden;
+  }
+  .choice-card.cs{background:linear-gradient(135deg,var(--blue-700),var(--blue-500));}
+  .choice-card.en{background:linear-gradient(135deg,var(--pink-600),var(--pink-400));}
+  .choice-card .ico{font-size:2.4rem;display:block;margin-bottom:10px;}
+  .choice-card h3{margin:0 0 4px;font-size:1.25rem;}
+  .choice-card span.sub{opacity:0.9;font-size:0.88rem;font-weight:400;}
+  .choice-card:active{transform:scale(0.98);}
+
+  .dedication{
+    margin-top:46px;text-align:center;padding:22px 14px;
+  }
+  .dedication .script{
+    font-family:'Dancing Script',cursive;
+    font-size:clamp(1.6rem,6vw,2.6rem);
+    font-weight:700;
+    background:linear-gradient(90deg,var(--blue-700),var(--pink-600));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    line-height:1.4;
+  }
+
+  /* TOPIC GRID */
+  .section-title{font-size:1.3rem;font-weight:800;color:var(--blue-900);margin:0 0 4px;}
+  .section-sub{color:var(--muted);margin:0 0 22px;font-size:0.92rem;}
+  .topic-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media (max-width:520px){.topic-grid{grid-template-columns:1fr;}}
+  .topic-card{
+    background:var(--card);border:1px solid var(--blue-200);border-radius:16px;
+    padding:18px;cursor:pointer;display:flex;align-items:center;gap:14px;
+    box-shadow:0 4px 14px rgba(43,90,146,0.06);
+  }
+  .topic-card:active{transform:scale(0.98);}
+  .topic-card .emoji{font-size:1.7rem;width:46px;height:46px;flex:none;
+    background:var(--blue-100);border-radius:12px;display:flex;align-items:center;justify-content:center;}
+  .topic-card.pink .emoji{background:var(--pink-100);}
+  .topic-card h4{margin:0 0 2px;font-size:1.02rem;color:var(--ink);}
+  .topic-card p{margin:0;color:var(--muted);font-size:0.82rem;}
+
+  .empty-box{
+    text-align:center;padding:50px 20px;background:var(--card);border-radius:var(--radius);
+    border:1px dashed var(--pink-400);box-shadow:var(--shadow);
+  }
+  .empty-box .emoji{font-size:2.4rem;}
+  .empty-box h3{color:var(--pink-600);margin:12px 0 6px;}
+  .empty-box p{color:var(--muted);margin:0;font-size:0.92rem;}
+
+  /* QUIZ */
+  .quiz-head{margin-bottom:16px;}
+  .quiz-topic{color:var(--blue-700);font-weight:700;font-size:0.95rem;margin:0 0 8px;}
+  .progress-track{height:8px;border-radius:99px;background:var(--blue-200);overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--blue-500),var(--pink-500,var(--pink-400)));border-radius:99px;transition:width .3s ease;}
+  .progress-label{display:flex;justify-content:space-between;font-size:0.78rem;color:var(--muted);margin-top:6px;}
+
+  .intro-panel{
+    background:var(--pink-100);border:1px solid var(--pink-400);border-radius:14px;
+    padding:14px 16px;margin-top:14px;
+  }
+  .intro-note{margin:0 0 6px;font-size:0.85rem;color:var(--blue-900);font-weight:600;direction:rtl;text-align:right;}
+  .intro-note.en{color:var(--muted);font-weight:400;direction:ltr;text-align:left;}
+  .intro-text{
+    margin-top:8px;direction:ltr;text-align:left;font-size:0.9rem;line-height:1.7;color:var(--ink);
+    white-space:pre-line;max-height:260px;overflow-y:auto;padding-right:4px;
+  }
+  .qcard{
+    background:var(--card);border-radius:var(--radius);padding:22px 18px;box-shadow:var(--shadow);
+    margin-top:16px;
+  }
+  .qtext{font-size:1.08rem;font-weight:700;color:var(--ink);margin:0 0 18px;line-height:1.6;direction:ltr;text-align:left;}
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .opt{
+    border:2px solid var(--blue-200);background:var(--blue-100);
+    border-radius:12px;padding:13px 14px;cursor:pointer;font-family:inherit;
+    text-align:left;direction:ltr;font-size:0.96rem;color:var(--ink);
+    display:flex;gap:10px;align-items:flex-start;
+  }
+  .opt .tag{font-weight:800;color:var(--blue-700);flex:none;}
+  .opt:active{transform:scale(0.99);}
+  .opt.correct{background:var(--good-bg);border-color:var(--good);}
+  .opt.correct .tag{color:var(--good);}
+  .opt.wrong{background:var(--bad-bg);border-color:var(--bad);}
+  .opt.wrong .tag{color:var(--bad);}
+  .opt.disabled{cursor:default;}
+  .opt.dim{opacity:0.55;}
+
+  .feedback{margin-top:16px;border-radius:14px;padding:14px 16px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:var(--good-bg);border:1px solid var(--good);}
+  .feedback.no{background:var(--bad-bg);border:1px solid var(--bad);}
+  .feedback .fb-title{font-weight:800;margin:0 0 8px;font-size:0.98rem;}
+  .feedback.ok .fb-title{color:var(--good);}
+  .feedback.no .fb-title{color:var(--bad);}
+  .expl-ar{direction:rtl;text-align:right;margin:0 0 8px;font-size:0.93rem;line-height:1.7;}
+  .expl-en{direction:ltr;text-align:left;margin:0;font-size:0.9rem;line-height:1.6;color:var(--muted);}
+
+  .nextrow{display:flex;justify-content:flex-end;margin-top:18px;}
+  .nextbtn{
+    border:none;background:linear-gradient(90deg,var(--blue-700),var(--pink-600));color:#fff;
+    padding:11px 26px;border-radius:999px;font-family:inherit;font-weight:700;font-size:0.95rem;cursor:pointer;
+  }
+  .nextbtn:disabled{opacity:0.4;cursor:not-allowed;}
+
+  /* RESULT */
+  .result-card{background:var(--card);border-radius:var(--radius);padding:34px 22px;text-align:center;box-shadow:var(--shadow);margin-top:16px;}
+  .result-score{font-size:2.6rem;font-weight:800;color:var(--blue-700);margin:6px 0;}
+  .result-msg{color:var(--muted);margin:0 0 22px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .ghostbtn{border:2px solid var(--blue-500);background:transparent;color:var(--blue-700);padding:10px 22px;border-radius:999px;font-family:inherit;font-weight:700;cursor:pointer;}
+
+  footer{text-align:center;color:var(--muted);font-size:0.78rem;margin-top:50px;padding-bottom:10px;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">🪼 <span id="topbarTitle">امتحان تحديد المستوى</span></div>
+  <button class="backbtn hidden" id="backBtn">رجوع</button>
+</div>
+
+<div class="wrap">
+
+  <!-- HOME VIEW -->
+  <div id="view-home">
+    <div class="hero">
+      <h1>امتحان تحديد المستوى للقبول الجامعي</h1>
+      <p>University Placement Exam — اختر المادة للبدء بالامتحان التفاعلي</p>
+    </div>
+    <div class="choice-grid">
+      <button class="choice-card cs" onclick="goTo('cs-home')">
+        <span class="ico">🖥️</span>
+        <h3>الحاسوب</h3>
+        <span class="sub">Computer Studies — اختر موضوعًا وابدأ</span>
+      </button>
+      <button class="choice-card en" onclick="goTo('en-home')">
+        <span class="ico">🇬🇧</span>
+        <h3>الإنجليزي</h3>
+        <span class="sub">English — قريبًا</span>
+      </button>
+    </div>
+
+    <div class="dedication">
+      <div class="script">This website made for director Tala 🪼</div>
+    </div>
+  </div>
+
+  <!-- COMPUTER TOPICS VIEW -->
+  <div id="view-cs-home" class="hidden">
+    <div class="section-title">مواضيع الحاسوب</div>
+    <p class="section-sub">Computer Topics — اختر موضوعًا لبدء امتحانه التفاعلي</p>
+    <div class="topic-grid" id="csTopicGrid"></div>
+  </div>
+
+  <!-- ENGLISH VIEW -->
+  <div id="view-en-home" class="hidden">
+    <div class="section-title">مواضيع الإنجليزي</div>
+    <p class="section-sub">English Topics — اختر موضوعًا لبدء امتحانه التفاعلي</p>
+    <div class="topic-grid" id="enTopicGrid"></div>
+  </div>
+
+  <!-- QUIZ VIEW -->
+  <div id="view-quiz" class="hidden">
+    <div class="quiz-head">
+      <p class="quiz-topic" id="quizTopicName"></p>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="progress-label"><span id="progressText">0 / 0</span><span id="scoreText">✔ 0</span></div>
+    </div>
+    <div class="intro-panel hidden" id="introPanel">
+      <p class="intro-note" id="introNoteAr"></p>
+      <p class="intro-note en" id="introNoteEn"></p>
+      <div class="intro-text" id="introText"></div>
+    </div>
+    <div class="qcard">
+      <p class="qtext" id="qtext"></p>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback">
+        <p class="fb-title" id="fbTitle"></p>
+        <p class="expl-ar" id="fbAr"></p>
+        <p class="expl-en" id="fbEn"></p>
+      </div>
+      <div class="nextrow">
+        <button class="nextbtn" id="nextBtn" disabled onclick="nextQuestion()">السؤال التالي</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT VIEW -->
+  <div id="view-result" class="hidden">
+    <div class="result-card">
+      <div style="font-size:2.4rem;">🎓</div>
+      <p class="result-score" id="resultScore"></p>
+      <p class="result-msg" id="resultMsg"></p>
+      <div class="result-actions">
+        <button class="nextbtn" onclick="retryTopic()">إعادة المحاولة</button>
+        <button class="ghostbtn" onclick="goTo(state.backView)">مواضيع أخرى</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Placement Exam Practice · الحاسوب والإنجليزي</footer>
+</div>
+
+<script>
+/* ===================== DATA ===================== */
+/* format per question: [questionText, [opt0,opt1,opt2,opt3], correctIndex, arabicExplanation, englishExplanation] */
+
+const CS_TOPICS = [
+  {id:"basics", name:"أساسيات الحاسوب", sub:"Computer Basics", emoji:"🧠", pink:false},
+  {id:"windows", name:"نظام التشغيل Windows", sub:"Windows & Desktop", emoji:"🪟", pink:true},
+  {id:"word", name:"Microsoft Word", sub:"معالج النصوص", emoji:"📝", pink:false},
+  {id:"excel", name:"Microsoft Excel", sub:"جداول البيانات", emoji:"📊", pink:true},
+  {id:"powerpoint", name:"Microsoft PowerPoint", sub:"العروض التقديمية", emoji:"📽️", pink:false},
+  {id:"internet", name:"الإنترنت", sub:"Internet", emoji:"🌐", pink:true},
+];
+
+const EN_TOPICS = [
+  {id:"grammar", name:"القواعد Grammar", sub:"Grammar", emoji:"📘", pink:false},
+  {id:"vocabulary", name:"المفردات Vocabulary", sub:"Vocabulary", emoji:"🔤", pink:true},
+  {id:"articles", name:"أدوات التعريف والأزمنة", sub:"Articles & Tenses", emoji:"🧩", pink:false},
+  {id:"reading", name:"الفهم القرائي", sub:"Reading Comprehension", emoji:"📖", pink:true},
+];
+
+const TOPIC_INTRO = {
+  reading: {
+    ar: "اقرأ النص التالي ثم أجب عن الأسئلة التي تليه.",
+    en: "Read the following passage, then answer the questions below.",
+    text: "The coffee break has become a permanent, invigorating black beverage with a persuasive taste. Later, the small tree that yielded the seeds received the permanent botanical classification of coffee Arabica, and it was from this species that Arabia supplied the entire world with coffee until the end of the 17th century.\n\nMiddle easterners and Europeans have long known the value of leisure when drinking coffee (or tea) and when eating, but Americans have had to acquire this approach. The coffee break as an organized American institution is relatively new. True, there have always been the valiant souls who slip out for coffee at the corner drug store. But as industry has become more and more solicitous of the welfare of the working man and woman, surreptitious disappearances from the office are almost extinct. Facts and figures substantiate an increased efficiency and morale among workers, who have a coffee break in mid-morning or mid-afternoon, and in some lucky instances, both times. The few minutes devoted to leisure and touch of camaraderie with colleagues refresh employees and send them back to work with renewed pep, statistics show.\n\nThe coffee break has become big business in America where restaurant services move into office buildings to supply personnel with their daily cups of energy. In 1957 in the United States, 27,000,000 workers drank 47,000,000 cups of coffee every working day. This represents 70 percent of the employed; in 1970 an estimated 85 per cent enjoyed the coffee break.\n\nThe growth of the custom in this country can probably be traced to the hurried breakfasts for which Americans are famous. The need for additional nourishment is met later on in the morning in the relaxation of the coffee break.\n\nIn Arabia, where coffee has not only a sociable place but, in many cases, a ceremonial one, Americans with the Arabian American Oil Company are finding special significance in a pleasant custom that originated in the land where they are now living. The coffee break reaches into every phase of life in Arabia."
+  },
+  articles: {
+    ar: "تذكير: لا تُستخدم أداة تعريف قبل أسماء المدن والدول والقارات (Tokyo, Amman, Africa)، ولا في تعابير مثل go to prison / sleep at home، ولا قبل وجبات الطعام (breakfast, lunch, supper).",
+    en: "Reminder: no article is used before cities/countries/continents (Tokyo, Amman, Africa), in expressions like 'go to prison' / 'sleep at home', or before meals (breakfast, lunch, supper).",
+    text: ""
+  }
+};
+
+const Q = {};
+
+Q.basics = [
+["CD-ROM stands for:",["Compact Disk Random Only Memory","Compact Disk Read Only Memory","Computer Device Read Only Memory","Computer Disk Random Online Memory"],1,
+"CD-ROM تعني \"قرص مضغوط للقراءة فقط\".","CD-ROM stands for Compact Disk Read Only Memory."],
+["Control Unit (CU) is the:",["Main unit of the computer, sometimes called the brain","Unit that controls and coordinates all other computer components","Main memory of any computer system","Unit responsible for performing all computer calculations"],1,
+"وحدة التحكم تنسّق وتتحكم بعمل جميع مكوّنات الحاسوب.","The Control Unit coordinates and controls all other computer components."],
+["Which of the following factors should you consider when buying a computer?",["Size of the RAM","Speed of the CPU","Size of the hard disk","All of the above"],3,
+"كل هذه العوامل (الذاكرة وسرعة المعالج وسعة القرص) مهمة عند الشراء.","All of these factors matter when buying a computer."],
+["The term \"end user\" is used to describe people who:",["use the output from computers (the end product)","write software for computers","use computers to perform information processing tasks","are the last to use a computer or its information"],2,
+"المستخدم النهائي هو من يستخدم الحاسوب لأداء مهام معالجة المعلومات.","An end user uses computers to perform information processing tasks."],
+["In which areas of today's business world would you expect to find microcomputers?",["In nearly all areas of business","Only in areas needing extensive mathematical processing","In areas that demand exact answers or word processing","In large corporations with big data budgets"],0,
+"الحواسيب الصغيرة موجودة اليوم في كل مجالات الأعمال تقريبًا.","Microcomputers are found in nearly all areas of business today."],
+["The largest computers, used mainly for research, are called:",["microcomputers","maxicomputers","supercomputers","mainframe computers"],2,
+"الحواسيب الفائقة (Supercomputers) هي الأكبر وتُستخدم للأبحاث.","Supercomputers are the largest, used mainly for research."],
+["The raw material used to create information is called:",["metaware","hardware","data","manuals / procedures"],2,
+"البيانات هي المادة الخام التي تُنتج منها المعلومات.","Data is the raw material used to create information."],
+["Software that performs tasks like word processing or database management is:",["DOS","system software","application software","operation software"],2,
+"برامج مثل معالجة النصوص وقواعد البيانات هي برامج تطبيقية.","Programs like word processing and databases are application software."],
+["Software used to interact between user programs and the computer is called:",["application software","system software","operation software","custom made software"],1,
+"برامج النظام تتوسّط بين برامج المستخدم والحاسوب.","System software mediates between user programs and the computer."],
+["Microcomputers are divided into two general categories:",["high speed and low speed","graphical and non-graphical","portable and desktop","math based and text based"],2,
+"تُقسم الحواسيب الصغيرة إلى محمولة ومكتبية.","Microcomputers split into portable and desktop categories."],
+["An example of data is:",["the average rainfall in Amman for 1995","the names of children born in Irbed in 1950","the mean of your credit card balances","the percentage of brown eyed people in class"],1,
+"أسماء الأطفال بيانات خام غير معالجة، أما الباقي معلومات محسوبة (متوسط أو نسبة).","A list of names is raw data; the others are computed/processed information."],
+["A magnetic tape is an example of:",["direct access storage device","random access storage device","sequential access storage device","straight line access storage device"],2,
+"الشريط الممغنط يُقرأ بالتسلسل، فهو جهاز تخزين وصول تسلسلي.","Magnetic tape is a sequential access storage device."],
+["Temporary, or volatile, storage is also known as:",["RAM","ROM","Megs","disk"],0,
+"الذاكرة المؤقتة المتطايرة تُعرف باسم RAM.","Temporary, volatile storage is known as RAM."],
+["When you delete a file:",["A copy will be sent to the desktop","You send the file to the Recycle Bin","The file will not be affected","A copy will be stored in your active folder"],1,
+"عند حذف ملف يُرسل إلى سلة المحذوفات.","When you delete a file, it goes to the Recycle Bin."],
+["Which statement is correct about arranging icons on the desktop?",["Icons can be arranged by name","Icons can be arranged by type","Icons can be arranged by size","All of the above"],3,
+"يمكن ترتيب الأيقونات بالاسم أو النوع أو الحجم، وكلها صحيحة.","Desktop icons can be arranged by name, type, or size — all correct."],
+["Which statement is correct about opening Control Panel?",["From Windows Explorer","From Settings on the Start menu","From My Computer","All of the above"],3,
+"يمكن فتح لوحة التحكم بعدة طرق، وكلها صحيحة.","Control Panel can be opened multiple ways — all are correct."],
+["The Documents list in the Start menu stores:",["The last 15 files you opened","The last 15 files you deleted","The last 15 files you copied","None of the above"],0,
+"قائمة المستندات تعرض آخر 15 ملفًا فُتحت.","The Documents list shows the last 15 files you opened."],
+["The desktop is:",["An example of a hardware device","A folder","A file","A window"],1,
+"سطح المكتب هو في الأساس مجلد خاص في نظام التشغيل.","The desktop is technically a special folder."],
+["When you select MS-Prompt from Programs on the Start menu:",["You will move to a DOS window","You will close your computer","You will close the DOS window","None of the above"],0,
+"اختيار MS-Prompt ينقلك إلى نافذة موجّه الأوامر (DOS).","Selecting MS-Prompt takes you to the DOS command window."],
+["The Shutdown icon on the Start menu means:",["Close all windows","Close the current window","Close your computer","None of the above"],2,
+"أيقونة Shutdown تُستخدم لإغلاق الحاسوب بالكامل.","The Shutdown icon closes/turns off the computer."],
+["To open a minimized window, you can click on the:",["window's button on the taskbar","maximize button on the title bar","restore button on the title bar","all of the above"],0,
+"لإعادة فتح نافذة مصغّرة، تنقر على زرها في شريط المهام.","Click the window's button on the taskbar to restore a minimized window."],
+["Typing ???.txt in Find means the computer will find:",["All files with extension txt only, any name","All files with only three letters, any extension","Files with a three-letter name and extension txt only","None of the above"],2,
+"??? تعني ثلاثة أحرف بالضبط، فتُطابق ملفات اسمها 3 أحرف وامتدادها txt.","??? matches exactly 3 characters, so it finds a 3-letter filename with a .txt extension."],
+["Typing S*S.doc in Find means the computer will find:",["Files with extension doc only","Files with only three letters and extension doc","Files whose first and last letters are S, extension doc","None of the above"],2,
+"* تعني أي عدد من الأحرف، فتُطابق ملفات تبدأ وتنتهي بـ S وامتدادها doc.","The * wildcard matches any characters, so it finds files starting and ending with S with a .doc extension."],
+["The Add New Hardware icon on Control Panel is used to:",["Add new hardware to your computer","Delete some hardware","Stop the work of some hardware","None of the above"],0,
+"أيقونة إضافة عتاد جديد تُستخدم لإضافة أجهزة جديدة.","The Add New Hardware icon is used to add new hardware."],
+["The easiest way to move a file from one folder to another (Win95) is to:",["Use Copy and Paste","Use Cut and Copy","Use Drag and Drop","Use Cut and Drop"],2,
+"أسهل طريقة لنقل ملف هي السحب والإفلات.","The easiest way to move a file is drag and drop."],
+["You can slow or speed up mouse movement from the:",["Mouse icon on Control Panel","System icon on Control Panel","Add/Remove Program icon","None of the above"],0,
+"يمكن ضبط سرعة الفأرة من أيقونة Mouse في لوحة التحكم.","Mouse speed is adjusted from the Mouse icon in Control Panel."],
+["To launch an application in Windows, you can ____ on its icon.",["Click","Drag","Double click","None of the above"],2,
+"لتشغيل برنامج، تنقر نقرًا مزدوجًا على أيقونته.","You launch an application by double-clicking its icon."],
+["We can copy, move, paste and rename files and folders by using:",["Windows Explorer","My Computer","A and B","None of the above"],2,
+"يمكن تنفيذ هذه العمليات من مستكشف الملفات أو جهاز الكمبيوتر، فكلاهما صحيح.","Both Windows Explorer and My Computer can perform these operations."],
+["The ____ of the computer is composed of an arithmetic-logic unit and a control unit.",["ALU","system unit","CPU","motherboard"],2,
+"المعالج المركزي (CPU) يتكوّن من الوحدة الحسابية المنطقية ووحدة التحكم.","The CPU is composed of the ALU and the Control Unit."],
+["The acronym ALU stands for:",["Applied Logical Unity","Arithmetic Logic Unit","Array of Logistical Units","Absolute Lower Utility"],1,
+"ALU تعني الوحدة الحسابية والمنطقية.","ALU stands for Arithmetic Logic Unit."],
+["The ALU performs:",["Input and Output operations","Absolute and Lateral operations","Memory and I/O operations","Arithmetic and Logical operations"],3,
+"الوحدة الحسابية المنطقية تنفّذ العمليات الحسابية والمنطقية.","The ALU performs arithmetic and logical operations."],
+["Data that is stored in RAM:",["is there until it is replaced","is only there while the power is on","remains a few minutes after power off","is permanent, lost only in a power failure"],1,
+"بيانات RAM متطايرة وتبقى فقط أثناء تشغيل الطاقة.","RAM is volatile — data stays only while the power is on."],
+["All the information used by the processor is loaded first into:",["REM","ROM","RAM","a disk"],2,
+"تُحمَّل كل المعلومات المستخدَمة من المعالج أولاً في الذاكرة RAM.","All information used by the processor is loaded into RAM first."],
+["The binary numbering system consists of ____ unique digits.",["16","8","2","1"],2,
+"النظام الثنائي يتكوّن من رقمين فقط: 0 و1.","The binary system consists of 2 unique digits: 0 and 1."],
+["A single character represented by 8 bits is called a:",["Meg","string","binary digit","byte"],3,
+"8 بتات تُسمى بايت (Byte).","8 bits are called a byte."],
+["One kilobyte is approximately a ____ bytes.",["thousand","million","billion","trillion"],0,
+"الكيلوبايت يساوي تقريبًا ألف بايت.","One kilobyte is approximately a thousand bytes."],
+["One megabyte is approximately a ____ bytes.",["thousand","million","billion","trillion"],1,
+"الميجابايت يساوي تقريبًا مليون بايت.","One megabyte is approximately a million bytes."],
+["One gigabyte is approximately a ____ bytes.",["thousand","million","billion","trillion"],2,
+"الجيجابايت يساوي تقريبًا مليار بايت.","One gigabyte is approximately a billion bytes."],
+["One terabyte is approximately a ____ bytes.",["thousand","million","billion","trillion"],3,
+"التيرابايت يساوي تقريبًا تريليون بايت.","One terabyte is approximately a trillion bytes."],
+["Another name for the system board is the:",["chipboard","motherboard","daughterboard","integrated circuit"],1,
+"اللوحة الأم هي الاسم الآخر للوحة النظام.","The system board is also called the motherboard."],
+["Chips that have built-in programs stored in them are called:",["RAM","ROM","extended memory","cache memory"],1,
+"ذاكرة ROM تحتوي برامج مخزّنة بشكل دائم منذ التصنيع.","ROM chips have built-in programs stored permanently."],
+["The keys labeled 0-9 on the keyboard are called:",["function keys","numeric keys","typewriter keys","special purpose keys"],1,
+"المفاتيح من 0-9 تُسمى المفاتيح الرقمية.","The 0-9 keys are called numeric keys."],
+["The keyboard keys with arrows on them are called:",["function keys","navigation keys","typewriter keys","special purpose keys"],1,
+"مفاتيح الأسهم تُسمى مفاتيح التنقل.","The arrow keys are called navigation keys."],
+["Keys like Caps Lock that turn a feature on or off are called:",["function keys","special purpose keys","toggle keys","combination keys"],2,
+"Caps Lock من مفاتيح التبديل (Toggle) لأنها تُشغّل/تُطفئ ميزة.","Caps Lock is a toggle key since it turns a feature on/off."],
+["A mouse, touch screen, and trackball are all examples of ____.",["scanning devices","voice-input devices","pointing devices","output devices"],2,
+"الفأرة وشاشة اللمس وكرة التتبع أجهزة إشارة (تأشير).","Mouse, touch screen, and trackball are pointing devices."],
+["The input device that rolls on a desktop and controls the cursor is a:",["touch screen","light pen","digitizer","mouse"],3,
+"الفأرة تتحرك على السطح وتتحكم بالمؤشر.","The mouse rolls on the desktop and controls the cursor."],
+["A device that records images of text or converts printed text into machine readable form is a:",["pointing device","scanner","printer","plotter"],1,
+"الماسح الضوئي يحوّل النص المطبوع إلى صيغة رقمية.","A scanner converts printed text into machine-readable form."],
+["Keys labeled F1, F2, and so on are called:",["function keys","numeric keys","typewriter keys","special purpose keys"],0,
+"مفاتيح F1، F2 وما شابه تُسمى مفاتيح الوظائف.","F1, F2, etc. are called function keys."],
+["The smallest unit of an output device display is called a:",["pixel","picture unit","VDT","monitor"],0,
+"أصغر وحدة في شاشة العرض تُسمى بكسل.","The smallest unit of a display is a pixel."],
+["Images and information produced on paper is called ____ output.",["soft copy","medium copy","hard copy","document quality"],2,
+"المخرجات المطبوعة على ورق تُسمى نسخة ورقية (Hard Copy).","Output printed on paper is called hard copy."],
+["A fast, draft quality, low-cost printer is the ____ printer.",["laser","dot matrix","ink jet","thermal"],1,
+"طابعة الإبر سريعة ورخيصة لكن جودتها منخفضة.","The dot matrix printer is fast, low-cost, and draft quality."],
+["The printer that sprays small droplets of ink is the ____ printer.",["laser","dot matrix","ink jet","thermal"],2,
+"طابعة النفث الحبري ترشّ قطرات حبر صغيرة.","The ink jet printer sprays small ink droplets."],
+["The printer that creates dot-like images using a beam of light is the ____ printer.",["laser","dot matrix","ink jet","thermal"],0,
+"الطابعة الليزرية تستخدم شعاع ضوء لتكوين الصورة.","The laser printer creates images using a beam of light."],
+["The general name for devices that convert machine-readable info into people-readable form is:",["input devices","scanning devices","conversion devices","output devices"],3,
+"أجهزة الإخراج تحوّل بيانات الحاسوب لصيغة يفهمها الإنسان.","Output devices convert machine-readable info into human-readable form."],
+["A ____ printer produces low-quality print and is inexpensive.",["laser","dot matrix","ink jet","thermal"],1,
+"طابعة الإبر رخيصة لكنها منخفضة الجودة.","The dot matrix printer is inexpensive but low-quality."],
+["A specialized output device for producing charts, maps, and high quality drawings is a:",["printer","plotter","scanner","imager"],1,
+"الراسم (Plotter) جهاز مخصص للرسومات والخرائط عالية الجودة.","A plotter is specialized for producing charts, maps, and drawings."],
+["Secondary storage is ____, meaning it keeps data after power is turned off.",["volatile","sequential","direct","non-volatile"],3,
+"التخزين الثانوي غير متطاير، يحتفظ بالبيانات بعد إيقاف التشغيل.","Secondary storage is non-volatile — it keeps data after power off."],
+["A removable floppy-disk cartridge with 100 MB capacity is called a ____ disk.",["Zip","mega","monster","cache"],0,
+"قرص Zip كان قرصًا قابلاً للإزالة بسعة 100 ميجابايت.","A removable disk with 100MB capacity is called a Zip disk."],
+["Data on a floppy disk is recorded in rings called:",["sectors","ringers","roundels","tracks"],3,
+"بيانات القرص المرن تُسجَّل في حلقات تُسمى مسارات.","Data on a floppy disk is recorded in rings called tracks."],
+["Increasing the amount of data stored on a disk by replacing repeating patterns is:",["file compression","data access","disk caching","RAID"],0,
+"ضغط الملفات يزيد المساحة المتاحة باستبدال الأنماط المتكررة.","File compression increases stored capacity by replacing repeating patterns."],
+["A WORM CD-ROM drive allows the user to:",["read stored data faster than a CD-ROM","read and write data like a hard drive","distribute large volumes of data quickly","write data once, but read it many times"],3,
+"قرص WORM يُكتب عليه مرة واحدة ويُقرأ عدة مرات.","A WORM CD-ROM lets you write data once but read it many times."],
+["A CD-RW disk:",["has faster access than an internal disk","can be erased and rewritten","can only be written once","holds less data than a floppy disk"],1,
+"قرص CD-RW يمكن مسحه وإعادة الكتابة عليه.","A CD-RW disk can be erased and rewritten."],
+["A DVD device can store:",["as much data as a CD-ROM","as much data as 100 floppy disks","more data than several CD-ROMs","digital data in an expanded format"],2,
+"قرص DVD يخزّن بيانات أكثر من عدة أقراص CD.","A DVD can store more data than several CD-ROMs."],
+["Which of the following is an example of an input unit (Keyboard / Mouse / Screen)?",["Keyboard","Mouse","Screen","A and C"],3,
+"لوحة المفاتيح والفأرة أجهزة إدخال، أما الشاشة فهي جهاز إخراج غالبًا؛ لاحظ أن المقصود هنا لوحة المفاتيح والفأرة معًا.","Keyboard and Mouse are the intended input-device pair; note the screen is normally an output device."],
+["ROM stands for:",["Read optical memory","Random only memory","Read only memory","Read online machine"],2,
+"ROM تعني ذاكرة القراءة فقط.","ROM stands for Read Only Memory."],
+["After processing the data, it will be:",["Input","Program","Custom software","Information"],3,
+"بعد معالجة البيانات تتحوّل إلى معلومات.","After processing, data becomes information."],
+["Software that works as an intermediate between user and computer is called:",["Application software","Operating system","Operation software","Excel"],1,
+"نظام التشغيل هو الوسيط بين المستخدم والحاسوب.","The operating system acts as the intermediary between user and computer."],
+["Your computer may be infected with a virus by one of the following reasons:",["Downloading files from the internet","Using an infected disk","Using an Anti Virus","Both (a) and (b)"],3,
+"تنزيل ملفات من الإنترنت واستخدام قرص مصاب سببان للإصابة بفيروس.","Downloading files and using an infected disk can both cause infection."],
+["The device that converts a graphical image to digital data is:",["Printer","Scanner","ALU","Screen"],1,
+"الماسح الضوئي يحوّل الصورة إلى بيانات رقمية.","A scanner converts a graphical image into digital data."],
+["What is the function of a disk drive?",["To print sheets of paper","To read from or write to a floppy disk","To display information on a screen","To calculate numbers"],1,
+"محرك الأقراص وظيفته القراءة والكتابة على القرص المرن.","A disk drive reads from or writes to a floppy disk."],
+["All of the following are types of printers except:",["Dot-matrix","Ink-jet","Webcam","Laser"],2,
+"الكاميرا الويب ليست نوعًا من الطابعات.","A webcam is not a type of printer."],
+["Which of the following are computer languages?",["Linux","Windows 2000","Word 2000","Visual Basic"],3,
+"فيجوال بيسك لغة برمجة، أما الباقي أنظمة تشغيل/برامج.","Visual Basic is a programming language; the others are operating systems/applications."],
+["What is the maximum capacity for a floppy diskette?",["1.2 MB","1.4 MB","2.0 MB","1.4 GB"],1,
+"أقصى سعة لقرص مرن قياسي هي تقريبًا 1.44 ميجابايت.","The maximum capacity of a standard floppy diskette is about 1.44MB."],
+["WWW is an abbreviation for:",["Wide World Web","World Wide Web","Wide Web World","Web World Wide"],1,
+"WWW تعني الشبكة العنكبوتية العالمية.","WWW stands for World Wide Web."],
+["What is most commonly used to enter text into a word processing program?",["keyboard","mouse","printer","monitor"],0,
+"لوحة المفاتيح هي الأداة الأكثر استخدامًا لإدخال النص.","The keyboard is most commonly used to enter text."],
+["Booting a computer means:",["Installing programs","Turning the computer off","Turning the computer on and loading the OS into RAM","None of the above"],2,
+"الإقلاع هو تشغيل الحاسوب وتحميل نظام التشغيل إلى الذاكرة.","Booting means turning the computer on and loading the OS into RAM."],
+["When electrical power is cut off, data and programs are lost in:",["Secondary storage","ROM","Primary memory","Operating system"],2,
+"عند انقطاع الكهرباء تُفقد البيانات الموجودة في الذاكرة الأساسية (RAM).","When power is cut, data in primary memory (RAM) is lost."],
+["The temporary memory of the computer is:",["ROM","REM","RAM","BIOS"],2,
+"الذاكرة المؤقتة للحاسوب هي RAM.","The computer's temporary memory is RAM."],
+["All of the following are secondary storage devices except:",["Magnetic Tapes","Printer","Magnetic Disks","Hard Disks"],1,
+"الطابعة ليست جهاز تخزين ثانوي، بل جهاز إخراج.","A printer is not a secondary storage device — it's an output device."],
+["A computer user can notice a virus if he/she observes:",["Lack of storage capability","Decrease in program execution speed","Unexpected error messages","All of the above"],3,
+"كل هذه العلامات (بطء، أخطاء، نقص تخزين) تدل على وجود فيروس.","All these signs together can indicate a virus infection."],
+["The most common input hardware for personal computers are:",["a mouse and keyboard","a keyboard and a screen","a GUI and a mouse","a printer and a monitor"],0,
+"الفأرة ولوحة المفاتيح هما أكثر أجهزة الإدخال شيوعًا.","A mouse and keyboard are the most common input hardware."],
+["The two main parts of the system unit are:",["a mouse and a keyboard","the CPU and memory","a printer and a monitor","primary and secondary storage"],1,
+"الجزءان الرئيسيان لوحدة النظام هما المعالج والذاكرة.","The two main parts of the system unit are the CPU and memory."],
+["The number of bits in a byte is:",["4","8","16","32"],1,
+"البايت الواحد يتكوّن من 8 بتات.","A byte consists of 8 bits."],
+["The computer is:",["a collection of electronic circuits and devices","an intelligent machine","a combination of hardware and software","all of the above"],3,
+"الحاسوب يجمع بين الدارات الإلكترونية والعتاد والبرمجيات معًا.","The computer is all of these: circuits, hardware, and software combined."],
+["The information:",["must be available at the right time and useful","should be available within one minute","should have good accuracy","a+c"],3,
+"المعلومة الجيدة يجب أن تكون متاحة بالوقت المناسب ومفيدة ودقيقة.","Good information must be timely, useful, and accurate."],
+["The CU:",["Used to store processed data temporarily","Used to control the processes in the CPU","Used to control output and input units only","Used to control RAM only"],1,
+"وحدة التحكم تُدير العمليات داخل المعالج.","The Control Unit controls the processes within the CPU."],
+["The CPU consists of:",["ALU, CU, and RAM","ROM, ALU, and RAM","CU, PU, and ALU","ALU, Registers, and CU"],3,
+"يتكوّن المعالج من الوحدة الحسابية المنطقية والمسجلات ووحدة التحكم.","The CPU consists of the ALU, Registers, and the Control Unit."],
+["The Main Memory:",["Consists of RAM, ROM, and Hard Disk","Could be temporary or permanent","Used to store user programs and data while running","b+c"],3,
+"الذاكرة الرئيسية قد تكون مؤقتة أو دائمة، وتُخزّن البرامج أثناء التشغيل.","Main memory can be temporary or permanent, and stores running programs and data."],
+["The Magnetic Disk:",["Classified as secondary storage","It is cheap and volatile","a+b"],0,
+"القرص الممغنط يُصنّف كتخزين ثانوي وهو غير متطاير فعليًا.","A magnetic disk is classified as secondary storage (it is non-volatile)."],
+["Which of the following statements is correct?",["Mini-computers are more powerful than mainframes","Micro-computers such as laptops","Mini-computers are suitable for personal use","Mainframes are suitable for small companies"],1,
+"الحواسيب الصغيرة (Micro) مثل أجهزة اللابتوب.","Microcomputers, such as laptops, is the correct statement."],
+["The computer virus has the ability to:",["Link itself to other programs","Compress itself","Coordinate the activities of the computer","Make backups of your files"],0,
+"الفيروس قادر على ربط نفسه ببرامج أخرى لينتشر.","A virus can attach/link itself to other programs to spread."],
+["The sound blaster is:",["An output unit only","An input unit only","Both of the above"],2,
+"بطاقة الصوت جهاز إدخال وإخراج معًا (ميكروفون وسماعات).","A sound card/blaster acts as both an input and output device."],
+["The smallest computers, used mainly for personal use, are called:",["microcomputers","maxicomputers","supercomputers","mainframe computers"],0,
+"الحواسيب الصغيرة هي الأصغر وتُستخدم شخصيًا.","Microcomputers are the smallest, used mainly for personal use."],
+["RAM is a:",["Memory unit you can write to or read from","Memory that cannot be changed by anyone","Control unit of the operating system","Read Access Memory"],0,
+"الذاكرة RAM يمكن الكتابة عليها والقراءة منها.","RAM is a memory unit you can write to and read from."],
+["Computer viruses are:",["Programs written to damage hardware devices","Programs written to damage other software programs","Unremovable","Not similar to human viruses in their effects"],1,
+"فيروسات الحاسوب برامج مكتوبة لإتلاف برامج أخرى.","Computer viruses are programs written to damage other software."],
+["The following is not an example of an input unit:",["Keyboard","Mouse","Scanner","Printer"],3,
+"الطابعة جهاز إخراج وليست إدخال.","A printer is an output device, not an input device."],
+["How many bytes are required to store the word SUMMER?",["7","6","48","8"],1,
+"كلمة SUMMER تتكوّن من 6 أحرف، أي 6 بايت.","SUMMER has 6 letters, so it needs 6 bytes."],
+["How many bits are required to store the word SUMMER?",["7","6","48","8"],2,
+"6 أحرف × 8 بتات لكل حرف = 48 بت.","6 characters × 8 bits each = 48 bits."],
+["RAM is part of the system's:",["operating system","hardware","software","none of above"],1,
+"الذاكرة RAM جزء من عتاد النظام.","RAM is part of the system's hardware."],
+["The most widely used type of computer is the:",["supercomputer","mainframe","minicomputer","microcomputer"],3,
+"الحاسوب الصغير هو الأكثر انتشارًا واستخدامًا.","The microcomputer is the most widely used type of computer."],
+["Another name for the keyboard, mouse, monitor, and system unit is:",["firmware","software","hardware","solidware"],2,
+"هذه المكونات المادية تُسمى عتاد (Hardware).","These physical components are collectively called hardware."],
+["Floppy disks, optical disks, DVDs, and hard drives are all examples of:",["system software","primary storage","secondary storage","CPUs"],2,
+"كلها أمثلة على وسائط التخزين الثانوي.","These are all examples of secondary storage."],
+["One major difference between primary and secondary storage is:",["primary is temporary, secondary is permanent","secondary is magnetic, primary is optical","secondary is faster than primary","primary is removable, secondary built in"],0,
+"الذاكرة الأساسية مؤقتة بينما التخزين الثانوي دائم.","Primary storage is temporary; secondary storage is permanent."]
+];
+
+Q.windows = [
+["Which of the following statements is correct about opening Control Panel?",["From Windows Explorer","From the Start menu","From My Computer","All of the above"],3,
+"يمكن فتح لوحة التحكم بعدة طرق، وكلها صحيحة.","Control Panel can be opened multiple ways — all are correct."],
+["Windows XP is an example of a(n):",["operating system","graphical user interface","application software","basic tools"],0,
+"ويندوز إكس بي هو مثال على نظام تشغيل.","Windows XP is an example of an operating system."],
+["When you double-click on an icon, you will ____ it.",["Highlight","Disable","Open","Select"],2,
+"النقر المزدوج على أيقونة يفتحها.","Double-clicking an icon opens it."],
+["You can get a popup (context) menu in Windows XP by:",["Right-clicking on the desktop","Left-clicking on My Computer","Left-clicking start then Windows Explorer","Double-clicking on My Computer"],0,
+"النقر بزر الفأرة الأيمن على سطح المكتب يظهر القائمة المختصرة.","Right-clicking on the desktop shows the context (popup) menu."],
+["An operating system function is:",["It can link itself to other programs","It can store huge amounts of data","It manages computer files","It is used to store user programs and data"],2,
+"من وظائف نظام التشغيل إدارة ملفات الحاسوب.","One function of an operating system is managing computer files."],
+["When you select Properties from the desktop context menu, you will open:",["Display properties","Taskbar properties","Control panel","None of the above"],0,
+"خيار Properties على سطح المكتب يفتح خصائص العرض (Display).","Selecting Properties on the desktop opens Display properties."],
+["The Date/Time icon on Control Panel is used to:",["Change computer time","Change computer date","A and B","None of the above"],2,
+"أيقونة التاريخ/الوقت تُستخدم لتغيير الوقت والتاريخ معًا.","The Date/Time icon changes both the computer's time and date."],
+["You can change the desktop background from:",["Taskbar properties","Add/Remove programs","Display properties","None of the above"],2,
+"يمكن تغيير خلفية سطح المكتب من خصائص العرض (Display Properties).","You can change the desktop background from Display properties."],
+["Screen Saver enables you to:",["Save the power dissipated by the computer","Protect your computer with a password","Display another picture after a specified time","All of the above"],3,
+"شاشة التوقف توفّر الطاقة وتحمي بكلمة مرور وتعرض صورة أخرى، وكلها صحيحة.","A screen saver can save power, protect with a password, and show a picture — all correct."],
+["You can change the screen saver in Windows XP through the:",["Accessibility Options icon","System icon","Date/Time icon","Display icon"],3,
+"يتم تغيير شاشة التوقف من أيقونة Display في لوحة التحكم.","The screen saver is changed via the Display icon in Control Panel."],
+["To change the appearance of your desktop:",["You have to buy a new computer","Right-click the desktop and select Properties","Adjust settings via Accessories","You cannot change the properties"],1,
+"يمكن تغيير مظهر سطح المكتب بالنقر بزر الفأرة الأيمن واختيار Properties.","You can right-click the desktop and select Properties to change its appearance."],
+["To copy a file from one folder to another:",["Select, right-click Copy, go to destination, right-click Paste","Select, hold left mouse, drag, release, choose Copy here","Select, hold left mouse, drag to destination, release","None of the above"],0,
+"طريقة النسخ الصحيحة هي التحديد ثم نسخ من القائمة، والانتقال للمجلد الوجهة ولصق.","The standard way to copy is select, right-click Copy, go to the destination, and Paste."],
+["To move a file from one folder to another:",["You can use copy and paste","You can use cut and paste","You can use cut and copy","b and c"],1,
+"نقل الملف يتم باستخدام قص ثم لصق.","Moving a file is done using cut then paste."],
+["To rename a file Test.DOC to Test.txt:",["Click the file, name highlights, type new name","Right-click, select Rename, type new name","In Explorer select Rename from File menu, type new name","b and c"],3,
+"يمكن إعادة التسمية عبر قائمة الزر الأيمن أو قائمة الملف في المستكشف.","Renaming can be done via the right-click menu or the File menu in Explorer."],
+["How do you shut down your computer?",["Press the PC power button","From the Start menu choose Shut Down","Unplug the wire from your PC","None of the above"],1,
+"الطريقة الصحيحة والآمنة لإيقاف التشغيل هي من قائمة ابدأ.","The correct, safe way to shut down is from the Start menu."],
+["How do you change the date and/or time of your PC?",["Start > Control Panel > Date and Time","Double-click the clock on the Taskbar","Right-click desktop, choose Time/Date","a+b"],3,
+"يمكن تغيير الوقت من لوحة التحكم أو بالنقر المزدوج على الساعة في شريط المهام.","You can change the date/time via Control Panel or by double-clicking the taskbar clock."],
+["What do you type to search for a 4-character file starting with 'a', ending with 'h', extension starting with 'd'?",["a*h.doc","a??h.d*","a?h.","h.d"],1,
+"?? تمثل حرفين مجهولين بين a و h، و d* تمثل امتداد يبدأ بـ d.","?? represents two unknown characters between a and h, and d* matches an extension starting with d."],
+["Is there a difference between a folder and a file?",["Yes","No"],0,
+"نعم، المجلد حاوية تنظّم الملفات، أما الملف فيحتوي بيانات فعلية.","Yes — a folder organizes items, while a file contains actual data."],
+["What is the purpose of the Run option on the Start Menu?",["Launch the Internet browser only","Open Internet Explorer only","Can be used to open any program","Used to edit text files"],2,
+"خيار Run يمكن استخدامه لفتح أي برنامج بكتابة اسمه أو مساره.","The Run option can be used to open any program by typing its name or path."],
+["Which statement about the Recycle Bin is correct?",["Once sent, files cannot be restored","Files are restored to the Windows/Temp directory","Files can be restored to their original directory","There is no way to specify its size"],2,
+"يمكن استعادة الملفات من سلة المحذوفات إلى مكانها الأصلي.","Files in the Recycle Bin can be restored to their original directory."],
+["Which statement about the Windows Taskbar is correct?",["The Taskbar can never be hidden","The Taskbar cannot be moved or resized","The Taskbar displays buttons for open programs","None of the above"],2,
+"شريط المهام يعرض أزرارًا لكل برنامج مفتوح.","The Taskbar displays buttons representing open programs."],
+["Which is the easiest way to move a file from one folder to another?",["Use Copy and Paste","Use Cut and Copy","Use Drag and Drop","Use Cut and Drop"],2,
+"أسهل طريقة لنقل ملف هي السحب والإفلات.","The easiest way to move a file is drag and drop."],
+["Typing ???.txt in search means the computer will find:",["Files with extension txt only, any name","Files with only three letters, any extension","Files with a three-letter name and extension txt only","None of the above"],2,
+"??? تعني ثلاثة أحرف بالضبط، فتُطابق ملفات اسمها 3 أحرف وامتدادها txt.","??? matches exactly 3 characters, so it finds a 3-letter filename with a .txt extension."],
+["Typing S*S.doc in search means the computer will find:",["Files with extension doc only","Files with only three letters and extension doc","Files whose first and last letters are S, extension doc","None of the above"],2,
+"* تعني أي عدد من الأحرف، فتُطابق ملفات تبدأ وتنتهي بـ S وامتدادها doc.","The * wildcard matches any characters, finding files starting/ending with S with a .doc extension."],
+["We can copy, move, paste and rename files and folders by using:",["Windows Explorer","My Computer","A and B","None of the above"],2,
+"يمكن تنفيذ هذه العمليات من مستكشف الملفات أو جهاز الكمبيوتر.","Both Windows Explorer and My Computer can perform these operations."],
+["To launch an application in Windows, you can ____ on its icon.",["Click","Drag","Double click","None of the above"],2,
+"لتشغيل برنامج، تنقر نقرًا مزدوجًا على أيقونته.","You launch an application by double-clicking its icon."],
+["The Shutdown icon on the Start menu means:",["Close all windows","Close the current window","Close your computer","None of the above"],2,
+"أيقونة Shutdown تُستخدم لإغلاق الحاسوب بالكامل.","The Shutdown icon closes/turns off the computer."],
+["The desktop is:",["An example of a hardware device","A folder","A file","A window"],1,
+"سطح المكتب هو في الأساس مجلد خاص في نظام التشغيل.","The desktop is technically a special folder."],
+["The Documents list in the Start menu stores:",["The last 15 files you opened","The last 15 files you deleted","The last 15 files you copied","None of the above"],0,
+"قائمة المستندات تعرض آخر 15 ملفًا فُتحت.","The Documents list shows the last 15 files you opened."],
+["Which of the following statements is correct about arranging icons on the desktop?",["Icons can be arranged by name","Icons can be arranged by type","Icons can be arranged by size","All of the above"],3,
+"يمكن ترتيب الأيقونات بالاسم أو النوع أو الحجم، وكلها صحيحة.","Desktop icons can be arranged by name, type, or size — all correct."],
+["To open a minimized window, you can click on the:",["window's button on the taskbar","maximize button on the title bar","restore button on the title bar","all of the above"],0,
+"لإعادة فتح نافذة مصغّرة، تنقر على زرها في شريط المهام.","Click the window's button on the taskbar to restore a minimized window."],
+["The Add New Hardware icon on Control Panel is used to:",["Add new hardware to your computer","Delete some hardware","Stop the work of some hardware","None of the above"],0,
+"أيقونة إضافة عتاد جديد تُستخدم لإضافة أجهزة جديدة.","The Add New Hardware icon is used to add new hardware."],
+["You can slow or speed up mouse movement from the:",["Mouse icon on Control Panel","System icon on Control Panel","Add/Remove Program icon","None of the above"],0,
+"يمكن ضبط سرعة الفأرة من أيقونة Mouse في لوحة التحكم.","Mouse speed is adjusted from the Mouse icon in Control Panel."]
+];
+
+Q.word = [
+["You normally start Word:",["at the DOS prompt","from the Windows program manager","from the document you are editing","from the Windows file manager"],1,
+"عادة يتم فتح ورد من مدير البرامج في ويندوز.","You normally start Word from the Windows program manager."],
+["When typing text in Word you should press ENTER at the end of a:",["line","paragraph","page","document"],1,
+"يُضغط Enter عند نهاية الفقرة فقط، فالسطور تلتف تلقائيًا.","You press Enter at the end of a paragraph, since lines wrap automatically."],
+["The extension for Word document files is:",[".TXT",".WP",".DOCX",".PPT"],2,
+"امتداد ملفات وورد الحديثة هو DOCX.","The extension for Word document files is .DOCX."],
+["The Save icon on the Quick Access Toolbar looks like:",["a file folder","two sheets of paper","a floppy disk","an envelope"],2,
+"أيقونة الحفظ في وورد على شكل قرص مرن (Floppy Disk).","The Save icon looks like a floppy disk."],
+["If you try to quit Word without first saving changes:",["The changes will be lost","Word will save the changes automatically","You will destroy your document file","You will be asked if you want to save changes"],3,
+"يسألك وورد دائمًا إذا كنت تريد حفظ التغييرات قبل الإغلاق.","Word always asks if you want to save changes before quitting."],
+["To select a single word:",["Press F8 three times","Press CTRL and click the word","Press CTRL + W","Double click the word"],3,
+"النقر المزدوج على كلمة يحدّدها بالكامل.","Double-clicking a word selects it entirely."],
+["The Copy button on the Home tab ribbon looks like:",["a pair of scissors","two sheets of paper","a sheet of paper and a clipboard","a printer"],2,
+"أيقونة النسخ في وورد تشبه ورقة مع لوح تقصيص (Clipboard).","The Copy button icon looks like a sheet of paper with a clipboard."],
+["If you save a document under a new name:",["The old name and file are deleted","The old file gets the new name","The file you're editing retains the old name","Both the old and new files will be saved"],3,
+"عند استخدام Save As يبقى الملف القديم ويُنشأ ملف جديد بالاسم الجديد.","Using Save As keeps the old file and creates a new file with the new name."],
+["When it is in the selection bar, the pointer:",["has a small rectangle attached to it","is shaped like an I-beam","is a vertical blinking line","becomes an arrow pointing up and to the right"],3,
+"في شريط التحديد يتحول المؤشر إلى سهم يشير لأعلى ولليمين.","In the selection bar, the pointer becomes an arrow pointing up and to the right."],
+["Which key combination formats selected text as bold?",["SHIFT + B","ALT + B","CTRL + B","ALT + CTRL + B"],2,
+"اختصار التنسيق الغامق (Bold) هو CTRL+B.","The shortcut for Bold formatting is CTRL + B."],
+["Which of the following includes a superscript?",["CO2","A = µr²","H2O","(a + b)"],1,
+"الأس (²) هو رمز مرتفع (Superscript)، بينما الأرقام في CO2 و H2O منخفضة (Subscript).","The exponent (²) is a superscript, while the 2s in CO2 and H2O are subscripts."],
+["Which of the following is NOT a character attribute in the Font dialog box?",["double spacing","font","underlining","color"],0,
+"تباعد الأسطر (Double Spacing) هو تنسيق فقرة وليس تنسيق حرف.","Double spacing is a paragraph format, not a character attribute."],
+["You are most likely to find Greek characters such as µ or £ in:",["the Times Roman font","the Wingdings font","the Helvetica font","the Symbol font"],3,
+"خط Symbol يحتوي على الرموز والأحرف اليونانية.","The Symbol font contains Greek characters and special symbols."],
+["To establish a new tab, you should click:",["the selection bar","the formatting toolbar","the ruler","the current paragraph"],2,
+"يتم إنشاء علامة تبويب جديدة بالنقر على المسطرة (Ruler).","You establish a new tab stop by clicking on the ruler."],
+["Suppose you inserted a picture in a document, which is correct?",["It can be moved","Its size can be changed","It can be deleted","All of the above"],3,
+"الصورة المُدرجة يمكن نقلها وتغيير حجمها وحذفها، وكلها صحيحة.","An inserted picture can be moved, resized, and deleted — all correct."],
+["When creating a table in Word, which sentence is incorrect?",["You can insert additional rows at the end only","You can insert new columns","You can delete rows from the beginning only","Both a and c"],3,
+"يمكن إدراج صفوف وحذفها من أي مكان بالجدول، ليست فقط البداية أو النهاية.","Rows can be inserted or deleted anywhere in the table, not only at the start or end."],
+["You insert a clip art and it is too big. To resize it you would:",["change it like changing font size","click it to show handles and drag a handle","click Insert tab and choose Resize","click Home tab and choose Resize"],1,
+"لتغيير حجم صورة، تنقر عليها لتظهر المقابض ثم تسحب أحدها.","To resize an image, click it to show the handles and drag one."],
+["What would you do to highlight a word?",["Drag the mouse while holding the left button","Roll the mouse around","Click the mouse three times","None of the above"],0,
+"يمكن تحديد نص بسحب الفأرة مع الضغط على الزر الأيسر.","You can select text by dragging the mouse while holding the left button."],
+["What happens when the \"Cut\" command is used?",["Only half the screen is seen","The application stops running","Selected text or graphics are removed","Nothing happens"],2,
+"أمر القص يزيل النص أو الرسومات المحددة وينسخها للحافظة.","The Cut command removes the selected text or graphics."],
+["Which one is NOT a tab in Microsoft Word 2013?",["File","Insert","Home","Table"],3,
+"Table ليست تبويبًا رئيسيًا ثابتًا، بل تظهر فقط عند العمل داخل جدول.","Table is not a fixed main tab — it only appears contextually when working inside a table."],
+["Which tab would you choose to change font size from 12 to 18 points?",["File","Home","Insert","Page Layout"],1,
+"أدوات حجم الخط موجودة في تبويب Home.","Font size tools are found on the Home tab."],
+["Which tab would you select to insert a shape into a document?",["Insert","Review","View","File"],0,
+"إدراج الأشكال يتم من تبويب Insert.","Shapes are inserted from the Insert tab."],
+["If you want to add a table to your document, which tab would you choose?",["File","Home","Insert","Save"],2,
+"الجداول تُدرج من تبويب Insert.","Tables are added from the Insert tab."],
+["Times New Roman, Comic Sans and Calibri are called:",["fonts","variations","font sizes","names"],0,
+"هذه أمثلة على أنواع الخطوط (Fonts).","These are examples of fonts."]
+];
+
+Q.excel = [
+["In Excel, the intersection of a column and a row is called:",["range","block","selection","cell"],3,
+"تقاطع عمود وصف يُسمى خلية (Cell).","The intersection of a column and row is called a cell."],
+["Excel workbooks have what file extension?",[".doc",".xlt",".xlw",".xlsx"],3,
+"امتداد ملفات إكسل الحديثة هو xlsx.","Excel workbook files use the .xlsx extension."],
+["How many rows does an Excel worksheet have?",["1024","1,048,576","256","60,000"],1,
+"ورقة عمل إكسل الحديثة تحتوي 1,048,576 صفًا.","A modern Excel worksheet has 1,048,576 rows."],
+["A new, blank workbook contains how many worksheets?",["1","2","3","4"],2,
+"في الإصدارات الكلاسيكية، يحتوي المصنف الجديد على 3 أوراق عمل افتراضيًا.","In classic Excel versions, a new workbook defaults to 3 worksheets."],
+["A rectangular block of cells is called a:",["data block","paragraph","code segment","range"],3,
+"مجموعة الخلايا المستطيلة تُسمى نطاق (Range).","A rectangular block of cells is called a range."],
+["If you change a cell entry a formula depends on, what happens?",["The formula shows an error","The formula recalculates automatically","You must rebuild the formula","You need to copy the formula upon itself"],1,
+"تتحدث الصيغة تلقائيًا عند تغيّر أي خلية تعتمد عليها.","The formula recalculates automatically when a cell it depends on changes."],
+["In Excel, what is the result of the formula =3+(4-2)*3?",["15","9","4","none of the above"],1,
+"العملية داخل القوس أولاً (4-2=2)، ثم الضرب (2×3=6)، ثم الجمع (3+6=9).","Parentheses first (4-2=2), then multiply (2×3=6), then add (3+6=9)."],
+["The way information appears in a cell (alignment, font) is the cell's:",["Style","format","display mode","attributes"],1,
+"طريقة ظهور البيانات (المحاذاة والخط) تُسمى تنسيق (Format).","How information appears in a cell is called its format."],
+["What happens when you close a workbook with unsaved changes?",["It is automatically saved","Excel will automatically exit","A dialog box will appear asking to save","A new empty workbook will appear"],2,
+"يظهر مربع حوار يسألك عن حفظ التغييرات قبل الإغلاق.","A dialog box appears asking you to save changes before closing."],
+["What is the shorter way of computing =C1+C2+...+C8?",["ADD(C1..C8)","TOTAL(C1:C8)","SUM(C1:C8)","C1:C8"],2,
+"دالة SUM هي الطريقة المختصرة لجمع نطاق من الخلايا.","The SUM function is the shorter way to add a range of cells."],
+["What tool can be used to quickly create a SUM formula?",["Summation","=SUM","AutoSum","Sum-o-matic"],2,
+"زر AutoSum يُنشئ صيغة الجمع تلقائيًا وبسرعة.","The AutoSum tool quickly creates a SUM formula."],
+["What feature gives detailed information on a particular cell?",["The reference area","The formula bar","The format menu","Edit menu"],1,
+"شريط الصيغة يعرض محتوى ومعلومات الخلية المحددة.","The formula bar shows the content and details of the selected cell."],
+["Excel displays number signs (#####) in a cell when:",["A formatted number is too long for the column","There is an error in a formula","A text entry is too long for the column","The cell has an invalid custom format"],0,
+"تظهر ##### عندما يكون العرض غير كافٍ لعرض الرقم المنسّق.","##### appears when the column isn't wide enough to display the formatted number."],
+["Writing an incorrect formula that does math on a text entry shows:",["ERROR","#VALUE","#####","!!!!!"],1,
+"يظهر خطأ #VALUE عند محاولة حساب رياضي على نص.","#VALUE error appears when performing math on a text entry."],
+["On a chart, what indicates what each color or symbol stands for?",["a data series","The X-axis","a legend","a category"],2,
+"وسيلة الإيضاح (Legend) توضح معنى كل لون أو رمز في الرسم البياني.","A legend shows what each color or symbol represents on a chart."],
+["Line charts are most appropriate for:",["Showing trends or changes over time","Comparing individual values at specific times","Showing relationships among portions of a whole","None of the above"],0,
+"المخططات الخطية مناسبة لإظهار الاتجاهات عبر الزمن.","Line charts are best for showing trends over time."],
+["Column charts are most appropriate for:",["Showing trends over time","Comparing individual values at specific times","Showing relationships among portions of a whole","None of the above"],1,
+"المخططات العمودية مناسبة لمقارنة قيم محددة.","Column charts are best for comparing individual values."],
+["Pie charts are most appropriate for:",["Showing trends over time","Comparing individual values at specific times","Showing relationships among portions of a whole","None of the above"],2,
+"المخططات الدائرية مناسبة لإظهار نسب أجزاء من كل.","Pie charts are best for showing relationships among parts of a whole."],
+["A data file created by a spreadsheet program is called?",["Template","Workbook","Worksheet","Either b or c"],1,
+"ملف البرنامج نفسه يُسمى مصنف (Workbook).","The file created by a spreadsheet program is called a workbook."],
+["What key combination returns you to the top of the worksheet?",["Page Up (PgUp)","Alt and Page Up","Ctrl and Home","Ctrl and left arrow"],2,
+"Ctrl+Home يعيدك إلى الخلية A1 في أعلى الورقة.","Ctrl+Home takes you back to cell A1 at the top of the worksheet."],
+["What key is used to select multiple different ranges of cells?",["Shift","Ctrl","Alt","AltCar / AltGr"],1,
+"يُستخدم مفتاح Ctrl لتحديد نطاقات متعددة غير متجاورة.","The Ctrl key is used to select multiple non-adjacent ranges."],
+["To edit existing data in a cell without retyping it all:",["one-click the cell","Click the Edit button on the Formula bar","Hold SHIFT while clicking the cell","None - you must retype"],1,
+"يمكن التعديل بالنقر داخل شريط الصيغة دون إعادة الكتابة.","You can edit via the formula bar without retyping everything."],
+["If you drag the fill handle down on a cell with a date:",["The date is copied to each cell","The date increases by 1 day each cell","The date increases by 1 week each cell","Nothing, AutoFill applies to numbers only"],1,
+"سحب مقبض التعبئة على تاريخ يزيده يومًا واحدًا في كل خلية.","Dragging the fill handle on a date increases it by one day per cell."],
+["To remove the contents of several cells at once, you can:",["Select the cells and press DELETE","Select and right-click, choose Clear Contents","Select and drag the fill handle back over them","All of the above"],3,
+"كل هذه الطرق تحذف محتوى الخلايا المحددة.","All of these methods clear the contents of selected cells."],
+["The formula that adds D4 to C2, then multiplies by B2 is:",["(D4+C2)*B2","D4+C2*B2","=(D4+C2*B2","=(B2*(D4+C2)"],3,
+"الصيغة الصحيحة تضرب B2 في مجموع (D4+C2)، أي B2*(D4+C2).","The correct formula multiplies B2 by the sum (D4+C2), i.e. B2*(D4+C2)."],
+["Cell A4=2 and A5=4. You drag the fill handle down to A8. The values in A6, A7, A8 are:",["8, 16, 32","2, 4, 2","2, 2, 2","6, 8, 10"],3,
+"النمط الخطي يزيد بمقدار 2 في كل خلية: 6، 8، 10.","The linear pattern increases by 2 each cell: 6, 8, 10."],
+["You can automatically resize a column to fit its content by ____ on the column boundary.",["Clicking","Double-clicking","Right-clicking","Double right-clicking"],1,
+"النقر المزدوج على حد العمود يُحجّمه تلقائيًا حسب المحتوى.","Double-clicking the column boundary auto-resizes it to fit the content."],
+["To save an existing file with a new name, what command should you use?",["File Name","Save As","Versions","Save"],1,
+"أمر Save As يحفظ الملف باسم جديد.","The Save As command saves the file under a new name."],
+["How many cells are included in the range A1:B3?",["2","4","6","9"],2,
+"النطاق A1:B3 يشمل عمودين × 3 صفوف = 6 خلايا.","The range A1:B3 covers 2 columns × 3 rows = 6 cells."],
+["The black box in the lower-right corner used to copy cells is the:",["Copy handle","Fill handle","Range handle","Entry handle"],1,
+"مقبض التعبئة (Fill Handle) هو المربع الصغير أسفل يمين التحديد.","The Fill Handle is the small box at the lower-right of a selection."],
+["Which of the following functions is written in the correct syntax?",["NOW(today)","SUM(D2-A2)","=SUM(A1:D1)","=SUM(A1=B1)"],2,
+"الصيغة الصحيحة تبدأ بعلامة = وتستخدم نطاقًا صحيحًا مثل A1:D1.","A correct formula starts with = and uses a valid range like A1:D1."],
+["What is the appropriate function to retrieve student status (pass or fail)?",["IF","SUMIF","COUNTIF","Average"],0,
+"دالة IF تُستخدم لاتخاذ قرار شرطي مثل نجاح/رسوب.","The IF function is used for conditional decisions like pass/fail."]
+];
+
+Q.powerpoint = [
+["A presentation consists of a series of ____.",["slides","cards","pages","illustrations"],0,
+"العرض التقديمي يتكون من سلسلة من الشرائح (Slides).","A presentation consists of a series of slides."],
+["The first slide in a presentation is a ____ slide.",["section header","title and content","title","comparison"],2,
+"أول شريحة في العرض تكون عادة شريحة العنوان (Title).","The first slide in a presentation is typically the title slide."],
+["After the title slide, the default layout for a new slide is ____.",["Section Header","Title and Content","Title","Comparison"],1,
+"التخطيط الافتراضي بعد شريحة العنوان هو Title and Content.","The default layout after the title slide is Title and Content."],
+["In Normal view, an active slide is easily deleted using the ____ key.",["Delete","Ctrl + Delete","Enter","F2"],0,
+"يمكن حذف الشريحة النشطة بالضغط على مفتاح Delete.","An active slide can be deleted by pressing the Delete key."],
+["A small ____ under a slide indicates a transition has been applied.",["square","triangle","diamond","star"],3,
+"يظهر رمز نجمة صغير أسفل الشريحة عند وجود انتقال (Transition).","A small star icon under the slide indicates a transition has been applied."],
+["____ pages have an image of the slide on top with notes below.",["Notes","Handouts","Slides","Outline"],0,
+"صفحات الملاحظات (Notes Pages) تعرض الشريحة أعلى والملاحظات أسفل.","Notes pages show the slide image on top and notes below."],
+["Use the ____ view to deliver your presentation as an electronic slide show.",["Normal","Slide Show","Slide Sorter","Presenter"],1,
+"عرض Slide Show يُستخدم لتشغيل العرض التقديمي فعليًا أمام الجمهور.","Slide Show view is used to actually deliver the presentation."],
+["____ control how text and objects come onto and exit the screen.",["Transitions","Animations","Illusions","Motions"],1,
+"الحركات (Animations) تتحكم بدخول وخروج العناصر من الشاشة.","Animations control how objects enter and exit the screen."],
+["To remove a transition from a slide, change it to ____.",["Remove","Restore","Zero","None"],3,
+"لإزالة الانتقال، يُختار None من قائمة الانتقالات.","To remove a transition, select None from the transitions list."],
+["To add animations in PowerPoint you must be in ____ view.",["Outline","Slide Sorter","Normal","Slide Show"],2,
+"تُضاف الحركات على العناصر فقط أثناء العرض في وضع Normal.","Animations are added while in Normal view."],
+["A ____ is text or a graphic you click to go to a file, location, or web page.",["URL","hyperlink","bullet","footer"],1,
+"الارتباط التشعبي (Hyperlink) ينقلك لملف أو موقع عند النقر عليه.","A hyperlink is text or graphic you click to jump to another location."],
+["Which file format can be added to a PowerPoint show?",[".jpg",".giv",".wav","All of the above"],3,
+"يمكن إضافة الصور والصوت لعرض بوربوينت، وكلها مدعومة.","Images and audio can all be added to a PowerPoint show."],
+["Material consisting of text and numbers is best presented as:",["A table slide","A bullet slide","A title slide","All of the above"],0,
+"البيانات النصية والرقمية تُعرض بشكل أفضل في جدول.","Text and numeric data are best presented in a table."],
+["Which should you use if you want all slides to have the same look?",["The slide layout option","Add a slide option","Outline view","A presentation design template"],3,
+"قالب التصميم (Design Template) يوحّد شكل جميع الشرائح.","A design template gives all slides a consistent, unified look."],
+["In order to edit a chart, you can:",["Triple click the chart object","Click and drag the chart object","Double click the chart object","Click the chart object"],2,
+"النقر المزدوج على الرسم البياني يفتحه للتعديل.","Double-clicking the chart object opens it for editing."],
+["You can create a new presentation by completing all EXCEPT:",["Clicking New on the toolbar","Clicking File, New","Clicking File, Open","Pressing Ctrl+N"],2,
+"File, Open يفتح ملفًا موجودًا، لا يُنشئ عرضًا جديدًا.","File, Open opens an existing file rather than creating a new presentation."],
+["Which should be used to add a slide to an existing presentation?",["File, add a new slide","Insert, New Slide","File Open","File, New"],1,
+"يتم إضافة شريحة جديدة من قائمة Insert > New Slide.","A new slide is added via Insert, New Slide."],
+["What is the default page setup orientation of a slide in PowerPoint?",["Vertical","Landscape","Portrait","None of the above"],1,
+"الاتجاه الافتراضي لشرائح بوربوينت هو أفقي (Landscape).","The default slide orientation in PowerPoint is Landscape."],
+["Which command brings you to the first slide in your presentation?",["Next slide button","Page up","Ctrl + Home","Ctrl + End"],2,
+"Ctrl+Home ينقلك إلى أول شريحة في العرض.","Ctrl+Home takes you to the first slide in the presentation."],
+["Which is NOT an option when printing handouts?",["Six slides per page","Five slides per page","Three slides per page","Two slides per page"],1,
+"لا يوجد خيار طباعة 5 شرائح في الصفحة ضمن خيارات النشرات.","There is no option to print five slides per page in handouts."],
+["The slide used to introduce a topic and set the tone is called the:",["Table slide","Graph slide","Bullet slide","Title slide"],3,
+"شريحة العنوان (Title Slide) تُقدّم الموضوع وتحدد نبرة العرض.","The title slide introduces the topic and sets the presentation's tone."],
+["The PowerPoint view displaying only text (title and bullets) is:",["Slide show","Slide sorter view","Notes page view","Outline view"],3,
+"عرض المخطط التفصيلي (Outline) يعرض النص فقط دون تصميم.","Outline view displays only the text (titles and bullets)."],
+["Presentation designs that regulate formatting and layout are commonly called:",["Design templates","Templates","Placeholders","Blueprints"],0,
+"تُسمى قوالب التصميم لأنها تضبط تنسيق وتخطيط الشرائح.","They're called design templates because they regulate slide formatting and layout."]
+];
+
+Q.internet = [
+["Internet is:",["a local computer network","a world wide network of computers","an interconnected network of computers","a world wide interconnected network using a common protocol"],3,
+"الإنترنت شبكة عالمية مترابطة تستخدم بروتوكولًا مشتركًا للتواصل.","The internet is a world wide interconnected network using a common protocol."],
+["The facilities available on the internet are:",["remote login","file transfer","word processing","All of the Above"],3,
+"البريد الإلكتروني والدخول عن بعد ونقل الملفات كلها خدمات إنترنت.","Email, remote login, and file transfer are all internet facilities."],
+["Internet requires:",["an international agreement to connect computers","a local area network","a commonly agreed set of rules to communicate","a World Wide Web"],2,
+"الإنترنت يعتمد على بروتوكولات (قواعد) متفق عليها للتواصل بين الحواسيب.","The internet needs a commonly agreed set of communication rules (protocols)."],
+["Each computer connected to the internet must:",["be an IBM PC","have a unique IP address","be internet compatible","have a modem connection"],1,
+"كل حاسوب على الإنترنت يحتاج عنوان IP فريد لتمييزه.","Every computer on the internet must have a unique IP address."],
+["Internet addresses must always have at least:",["a country name or organization type","internet service provider's name","name of individual","type of organization"],0,
+"يجب أن يحتوي عنوان الإنترنت على نوع المؤسسة أو رمز البلد.","An internet address must include an organization type or country code."],
+["World Wide Web is:",["another name for internet","world wide connection for computers","a collection of linked information residing on computers connected by the internet","a collection of world wide information"],2,
+"الويب مجموعة معلومات مترابطة موجودة على حواسيب متصلة بالإنترنت.","The Web is a collection of linked information on computers connected via the internet."],
+["A World Wide Web contains web pages:",["residing in many computers","created using HTML","with links to other web pages","residing in many computers linked using HTML"],3,
+"صفحات الويب موزعة على حواسيب كثيرة ومكتوبة ومترابطة بلغة HTML.","Web pages reside on many computers and are linked together using HTML."],
+["A web page is located using a:",["Universal Record Linking","Uniform Resource Locator","Universal Record Locator","Uniformly Reachable Links"],1,
+"يُستخدم رابط URL لتحديد موقع صفحة الويب.","A web page is located using a Uniform Resource Locator (URL)."],
+["A search engine is a program that searches:",["for information","web pages","web pages for specified index terms","web pages for information using specified search terms"],3,
+"محرك البحث يبحث في صفحات الويب عن معلومات باستخدام كلمات بحث محددة.","A search engine searches web pages for information using specified search terms."],
+["HTML stands for:",["Hyper Text Making Links","Hyper Text Markup Language","Higher Textual Marking of Links","Hyper Text Mixer of Links"],1,
+"HTML تعني لغة توصيف النص التشعبي.","HTML stands for Hyper Text Markup Language."],
+["Which is a correct format for an Email address?",["name@website@info","name@website.info","www.nameofwebsite.com","name.website.com"],1,
+"صيغة البريد الصحيحة هي اسم@نطاق.نوع، مثل name@website.info.","A correct email format is name@domain.extension, like name@website.info."],
+["The computer jargon WWWW stands for:",["World Wide Web Worm","World Wide Wildlife Web","World Wide Women's Web","World Wide Women's Week"],0,
+"WWWW مصطلح فكاهي يشير إلى دودة الويب العالمية.","WWWW is jargon for the World Wide Web Worm."],
+["The process of transferring files from a computer on the internet to yours is called:",["Uploading","Forwarding","FTP","Downloading"],3,
+"نقل ملفات من الإنترنت إلى جهازك يُسمى تنزيل (Downloading).","Transferring files from the internet to your computer is called downloading."],
+["Which one of the following is NOT a search engine?",["Bing","Google","Yahoo","Windows"],3,
+"ويندوز نظام تشغيل وليس محرك بحث.","Windows is an operating system, not a search engine."],
+["Internet Explorer falls under:",["Operating System","Compiler","Browser","IP address"],2,
+"إنترنت إكسبلورر هو متصفح ويب (Browser).","Internet Explorer is a web browser."],
+["Moving from one website to another is called:",["Downloading","Browsing","Uploading","Attachment"],1,
+"التنقل بين المواقع يُسمى تصفح (Browsing).","Moving between websites is called browsing."],
+["Which technology enables voice calls over a computer network?",["Internet Voice Protocol","Voice over IP","Digital Telephony Subscriber","Universal Asynchronous Receiver Transmitter"],1,
+"تقنية VoIP تُستخدم لإجراء مكالمات صوتية عبر شبكة الحاسوب.","Voice over IP (VoIP) enables voice calls over a computer network."]
+];
+
+Q.grammar = [
+["I come to school by bus. What is the correct question?",["How often do you come to school?","How do you come to school?","How long do you come to school?"],1,
+"نسأل عن وسيلة المواصلات باستخدام How.","We ask about the means of transport using 'How'."],
+["____ is that young woman?",["Who","How","What"],0,
+"نسأل عن هوية شخص باستخدام Who.","We ask about a person's identity using 'Who'."],
+["____ did you get here today? I walked.",["Why","Who","How"],2,
+"نسأل عن طريقة الوصول باستخدام How.","We ask about the manner of arrival using 'How'."],
+["What is the negative form of: \"My brother lives in the town center\"?",["My brother don't lives in the town center.","My brother doesn't live in the town center.","My brother have not live in the town center."],1,
+"مع الغائب المفرد نستخدم doesn't + الفعل المجرد.","Present simple negative with he/she uses doesn't + base verb."],
+["Change the subject \"I\" to \"She\": \"I live in Jordan.\"",["She live in Jordan.","She lives in Jordan.","She has lived in Jordan."],1,
+"مع الضمير She نضيف s للفعل في المضارع البسيط.","With 'she', add -s to the verb in the present simple."],
+["\"At about 10:30 a.m.\" is the best answer to which question?",["What time does she finish work?","When time does she finish work?","How often does she finish work?"],0,
+"الإجابة عن وقت محدد تكون بسؤال What time.","An answer giving a specific time answers a 'What time' question."],
+["Which is the correct use of \"often\"?",["I cook often meal for my friend.","I often cook meal for my friends.","Often, cook meal for my friends."],1,
+"الظرف often يأتي قبل الفعل الأساسي وبعد الفاعل.","The adverb 'often' comes before the main verb, after the subject."],
+["Terri ____ in a small apartment in the center of town.",["Live","Lives","Lived"],1,
+"مع الغائب المفرد Terri نضيف s للفعل في المضارع البسيط.","With third person singular (Terri), add -s to the verb."],
+["I check my e-mail ____.",["Always","Every day","Once a week"],1,
+"Every day تعبير زمني يقع بشكل طبيعي في نهاية الجملة، أما Always فيسبق الفعل عادة ولا يوضع بنهاية الجملة.","'Every day' naturally fits at the end of a sentence, while 'always' normally goes before the verb, not at the end."],
+["I saw him ____ yesterday.",["X (no word)","The","In the"],0,
+"لا نحتاج أداة قبل yesterday.","No article is needed before 'yesterday' — the answer is X (no word)."],
+["Colour TV ____ to Europe in the 1900s.",["Come","Comes","Had come"],2,
+"نستخدم الماضي التام لوصف حدث سابق ضمن سرد تاريخي.","Past perfect (had come) sets the scene for a historical narrative."],
+["The first colour TVs ____ very expensive.",["Was","Were","Had"],1,
+"مع الجمع (TVs) نستخدم Were في الماضي.","With plural subjects (TVs), we use 'were' in the past."],
+["People ____ using mobile phones 100 years ago.",["Start","Started","Starts"],1,
+"الماضي البسيط لفعل start هو started.","The simple past of 'start' is 'started'."],
+["The lesson ____ a few minutes late.",["Begin","Begun","Began"],2,
+"الماضي البسيط لفعل begin هو began (فعل غير منتظم).","The simple past of 'begin' is the irregular form 'began'."],
+["The shop opened ____ 1998.",["At","In","On"],1,
+"نستخدم In مع السنوات.","We use 'in' with years."],
+["There are no lessons ____ Friday afternoon.",["At","In","On"],2,
+"نستخدم On مع أيام الأسبوع وفتراتها المحددة.","We use 'on' with specific days like Friday afternoon."],
+["You ____ speak with your mouth full.",["Shouldn't","Should","Haven't"],0,
+"النصيحة السلبية تُصاغ بـ Shouldn't.","Negative advice is expressed with 'shouldn't'."],
+["\"Is it possible to borrow your dictionary?\" has the same meaning as:",["Should I borrow your dictionary?","Can I borrow your dictionary?","May I borrow your dictionary?"],1,
+"Is it possible to..? تعادل Can I..? في طلب الإذن بشكل غير رسمي.","'Is it possible to...?' is equivalent to the informal 'Can I...?'"],
+["\"My son is six. Do I have to buy him a ticket?\" The answer is:",["Yes, you can.","Yes, you does.","Yes, you do."],2,
+"في الأسئلة بـ Do نجيب بـ Yes, you do.","Questions with 'Do' are answered with 'Yes, you do'."],
+["You get ____ of bed.",["On","Out","In"],1,
+"نقول get out of bed بمعنى النهوض من الفراش.","We say 'get out of bed' meaning to leave the bed."],
+["You ____ be very enthusiastic.",["Have to","Should to","Can"],0,
+"التعبير عن الإلزام يكون بـ Have to.","Obligation is expressed with 'have to'."],
+["____ change seats?",["You can","You have to","Do you mind if I?"],2,
+"طلب الإذن بأدب يكون بصيغة Do you mind if I...?","A polite request for permission uses 'Do you mind if I...?'"],
+["I ____ the answer to this question.",["I'm not knowing.","Don't know.","Am not know."],1,
+"النفي في المضارع البسيط مع I يكون بـ Don't + الفعل.","Present simple negative with 'I' uses don't + verb."],
+["____ what it says?",["Are you understand?","Do you understand?","Do you understanding?"],1,
+"السؤال في المضارع البسيط يبدأ بـ Do مع الفعل المجرد.","Present simple questions start with 'Do' + base verb."],
+["I ____ fashion magazine.",["Am never reading.","Never read.","Read never."],1,
+"الظرف Never يأتي قبل الفعل مباشرة.","The adverb 'never' comes directly before the verb."],
+["I ____ to give up smoking.",["Am trying.","Try.","Will try."],0,
+"المضارع المستمر يعبّر عن محاولة مستمرة حاليًا.","Present continuous expresses an ongoing current attempt."],
+["Mariana isn't here today. She ____ the day with her family.",["Spend","Spends","Is spending"],2,
+"المضارع المستمر يُستخدم لوصف حدث يحدث الآن.","Present continuous describes something happening right now."],
+["Who ____ the dinner? It ____ great!",["Is cooking – smelling","Cook – smell","Is cooking – smells"],2,
+"نستخدم المضارع المستمر للفعل النشط (cooking) والمضارع البسيط للفعل الحسي (smells).","We use present continuous for the action verb (cooking) and present simple for the sense verb (smells)."],
+["Did they ____ tennis last Saturday?",["played","play","playing","plays"],1,
+"بعد Did نستخدم الفعل المجرد.","After 'Did', use the base form of the verb."],
+["Ali ____ a new car nowadays.",["have been","had been","had","has"],3,
+"Nowadays مع المضارع البسيط يحتاج has مع الغائب المفرد.","'Nowadays' with present simple needs 'has' for third person."],
+["The house was quiet when I got home. Everybody ____ to bed.",["goes","went","gone","going"],2,
+"المعنى المقصود ماضٍ تام (had gone) أي حدث قبل رجوعه للمنزل؛ أقرب خيار متاح هو gone.","The intended meaning is past perfect (had gone) — it happened before he got home; the closest option given is 'gone'."],
+["Find the error: Rami [shouldn't]A [takes]B [too much]C [luggage]D; he'll stay there for only two days.",["A","B","C","D"],1,
+"بعد Shouldn't يأتي الفعل المجرد بدون s، فالخطأ في takes ويجب أن تكون take.","After 'shouldn't', use the base verb without -s; the error is 'takes', which should be 'take'."],
+["Find the error: [I saw]A [Sue in town]B [yesterday, but she]C [doesn't seen me]D.",["A","B","C","D"],3,
+"الجملة في الماضي، فيجب أن تكون didn't see بدلاً من doesn't seen.","The sentence is in the past, so it should be 'didn't see' instead of 'doesn't seen'."],
+["He ____ has black eyes.",["has","had","having","have been"],0,
+"مع الضمير He في المضارع البسيط نستخدم has.","With 'he' in the present simple, we use 'has'."]
+];
+
+Q.vocabulary = [
+["____ a video/DVD.",["Rent","Go for a","Play"],0,
+"نقول Rent a video بمعنى استئجار فيلم.","We say 'rent a video/DVD' meaning to hire it."],
+["____ run.",["Go far","Go for a","Go"],1,
+"التعبير الصحيح هو Go for a run.","The correct expression is 'go for a run'."],
+["How much ____?",["The bill","Do cost","Does this cost"],2,
+"نسأل عن السعر بصيغة How much does this cost?","We ask about price with 'How much does this cost?'"],
+["One sport that needs gloves:",["Volley","Boxing","Judo"],1,
+"الملاكمة (Boxing) رياضة تحتاج قفازات.","Boxing is a sport that requires gloves."],
+["My sister was really ____ of the dark as a small child.",["Nervous","Surprised","Scared"],2,
+"نقول Scared of the dark بمعنى خائف من الظلام.","We say 'scared of the dark' to mean afraid of darkness."],
+["I'd like to know how people feel ____ the new plans.",["About","For","Of"],0,
+"التعبير الصحيح هو Feel about شيء ما.","The correct phrase is 'feel about' something."],
+["I took a couple of aspirin and an hour later I felt ____.",["Friendly","The finest","Fine"],2,
+"نقول I felt fine بمعنى شعرت بتحسن.","We say 'I felt fine' to mean feeling better."],
+["I was feeling very tired, ____ I went to bed very early.",["Then","And","So"],2,
+"So تربط سببًا بنتيجته.","'So' connects a cause with its result."],
+["Ok, Ok, I'm nearly ready to go. Don't be so ____.",["Impatient","Patient","Worried"],0,
+"نقول Don't be so impatient بمعنى لا تكن غير صبور.","We say 'Don't be so impatient' meaning don't be in a rush."],
+["You get ____ bed.",["Into","Away","Off"],0,
+"نقول get into bed بمعنى الدخول إلى الفراش للنوم.","We say 'get into bed' meaning to enter bed to sleep."],
+["Can you turn ____ the lights before you go out?",["Up","Away","Off"],2,
+"نقول turn off the lights بمعنى إطفاء الأنوار.","We say 'turn off the lights' meaning to switch them off."],
+["I need to wake ____ at seven tomorrow morning.",["Off","Out","Up"],2,
+"نقول wake up بمعنى الاستيقاظ.","We say 'wake up' meaning to stop sleeping."],
+["Can I ask a question, please? Sure, go ____.",["Ahead","Off","Up"],0,
+"نقول go ahead بمعنى تفضل / استمر.","We say 'go ahead' meaning please continue/proceed."],
+["Someone who designs and plans buildings:",["Architect","Journalist","Lawyer"],0,
+"المهندس المعماري (Architect) هو من يصمم المباني.","An architect is someone who designs and plans buildings."],
+["I'm sure they'll get married ____.",["Every day","One day","The day before yesterday"],1,
+"One day تعني يومًا ما في المستقبل.","'One day' means at some point in the future."],
+["It was a ____ today; I was late for work, had an argument, and lost my handbag.",["Twice a day","A day off","Bad day"],2,
+"وصف يوم مليء بالمشاكل يكون Bad day.","A day full of problems is described as a 'bad day'."],
+["Many ____ returns. (birthday wish)",["Best","Happy","Merry"],1,
+"التعبير الثابت هو Many happy returns في التهنئة بعيد الميلاد.","The fixed expression is 'Many happy returns' for birthday wishes."],
+["Thanks ____ coming.",["To","Of","For"],2,
+"نقول Thank you for + الفعل مع ing.","We say 'Thank you for' + verb-ing."],
+["You look tired. Why don't you take a day ____ work?",["At","Off","Out"],1,
+"نقول take a day off work بمعنى أخذ إجازة يوم.","We say 'take a day off work' meaning to take a day of leave."],
+["Statistics show that people eat ____ much more than ten years ago.",["Off","Out","Up"],1,
+"نقول eat out بمعنى تناول الطعام خارج المنزل في مطعم.","We say 'eat out' meaning to have meals at restaurants."],
+["Carnival is a good time for everyone to dress ____ and enjoy themselves.",["Off","Out","Up"],2,
+"نقول dress up بمعنى التزين وارتداء ملابس مميزة.","We say 'dress up' meaning to wear special/fancy clothes."],
+["Laila's dress is very similar ____ mine.",["To","Front of","As"],0,
+"نقول similar to بمعنى مشابه لـ.","We say 'similar to' meaning alike to something."],
+["My grandfather ____ in his seventies, but he ____ a very young face.",["Are, has got","Is, have got","Is, has got"],2,
+"مع He نستخدم Is وHas got في المضارع.","With 'he', we use 'is' and 'has got' in the present."],
+["Amman is the ____ of Jordan.",["nation","principal","capital","main"],2,
+"عمّان هي عاصمة الأردن (Capital).","Amman is the capital of Jordan."],
+["My father doesn't always wear the traditional ____.",["dress","coat","shirt","suit"],0,
+"الزي التقليدي يُسمى Traditional dress.","Traditional clothing is called 'traditional dress'."],
+["Osama ____ his hand. (correct spelling)",["rais","arous","raise","arias"],2,
+"التهجئة الصحيحة للفعل هي raise.","The correct spelling of the verb is 'raise'."],
+["The food which people eat is converted into energy. (closest meaning to \"converted\")",["revealed","completed","introduced","transformed"],3,
+"Transformed مرادف لـ converted بمعنى تحوّل.","'Transformed' is a synonym for 'converted', meaning changed into another form."],
+["The teacher gives us judgment for this subject. (closest meaning)",["statement","assess","make cover","analysis"],1,
+"المقصود هو كلمة قريبة من التقييم؛ أقرب خيار هو Assess.","The intended meaning relates to evaluation/judgment; the closest option is 'assess'."],
+["\"He makes a better husband than father.\" This means:",["He tries to be a good husband but not father.","Her father is better than her husband.","He is not a very good father.","Fathers are usually good."],2,
+"التعبير يعني أنه زوج أفضل من كونه أبًا، أي أنه ليس أبًا جيدًا جدًا.","The expression means he's a better husband than a father — i.e., not a very good father."]
+];
+
+Q.articles = [
+["____ player that I met yesterday was Omar.",["the","an","X","a"],0,
+"نستخدم the لأن الاسم محدد بجملة وصفية (that I met yesterday).","We use 'the' because the noun is specified by a relative clause."],
+["____ rich must help the poor.",["X","an","a","the"],3,
+"نستخدم the + صفة للدلالة على فئة من الناس (الأغنياء).","We use 'the' + adjective to refer to a group of people (the rich)."],
+["We shall go on ____ picnic.",["an","a","the","X"],1,
+"نستخدم a قبل اسم نكرة يبدأ بصوت ساكن.","We use 'a' before a singular countable noun starting with a consonant sound."],
+["Ahmad goes to ____ school every morning at 7 o'clock.",["a","X","the","an"],1,
+"لا نستخدم أداة تعريف عند الحديث عن الذهاب إلى المدرسة بصفتها الغرض منها (الدراسة).","No article is used when talking about going to school for its purpose (studying)."],
+["He ____ has black eyes.",["has","had","having","have been"],0,
+"مع الضمير He في المضارع البسيط نستخدم has.","With 'he' in the present simple, we use 'has'."]
+];
+
+Q.reading = [
+["Before the day of the coffee break, to what place did American workers \"slip out for coffee\"?",["To a hotel","To a restaurant","To a club","To a drug store"],3,
+"النص يذكر أنهم كانوا يتسللون إلى صيدلية الزاوية (corner drug store).","The passage mentions they used to slip out to the corner drug store."],
+["Why did industry in America approve the coffee break for workers?",["It increased efficiency and morale","It gave jobs to cooks and waiters","Doughnuts could be sold at profit","Coffee could be sold at profit"],0,
+"النص يذكر أن استراحة القهوة رفعت الكفاءة والمعنويات.","The passage states the coffee break increased efficiency and morale."],
+["What does the author mean by \"leisure and touch of camaraderie\" at the coffee break?",["The workers have time for errands","The workers can get to know each other better","The workers can make personal calls","The workers can play games"],1,
+"الزمالة (camaraderie) تعني تقارب العلاقات بين الزملاء.","Camaraderie refers to workers bonding and getting to know each other."],
+["In the US, the need for mid-morning nourishment during the coffee break is probably due to:",["Hurried breakfasts","Light lunches","Fondness of doughnuts","Lack of other snack breaks"],0,
+"النص يربط الحاجة لاستراحة القهوة بوجبات الإفطار السريعة للأمريكيين.","The passage links the need for a coffee break to Americans' hurried breakfasts."],
+["In what country does coffee drinking have a ceremonial as well as a social place?",["India","United States","Arabia","Spain"],2,
+"النص يذكر أن للقهوة مكانة اجتماعية وطقسية في شبه الجزيرة العربية.","The passage states coffee has a ceremonial and social place in Arabia."]
+];
+
+/* ===================== APP LOGIC ===================== */
+let state = { topicId:null, list:[], idx:0, score:0, answered:false };
+
+function goTo(view){
+  document.getElementById('view-home').classList.add('hidden');
+  document.getElementById('view-cs-home').classList.add('hidden');
+  document.getElementById('view-en-home').classList.add('hidden');
+  document.getElementById('view-quiz').classList.add('hidden');
+  document.getElementById('view-result').classList.add('hidden');
+  const back = document.getElementById('backBtn');
+  const title = document.getElementById('topbarTitle');
+
+  if(view==='home'){ document.getElementById('view-home').classList.remove('hidden'); back.classList.add('hidden'); title.textContent='امتحان تحديد المستوى'; }
+  if(view==='cs-home'){ document.getElementById('view-cs-home').classList.remove('hidden'); back.classList.remove('hidden'); back.onclick=()=>goTo('home'); title.textContent='الحاسوب'; renderTopics(); }
+  if(view==='en-home'){ document.getElementById('view-en-home').classList.remove('hidden'); back.classList.remove('hidden'); back.onclick=()=>goTo('home'); title.textContent='الإنجليزي'; renderEnTopics(); }
+  window.scrollTo(0,0);
+}
+
+function renderTopics(){
+  const grid = document.getElementById('csTopicGrid');
+  grid.innerHTML = '';
+  CS_TOPICS.forEach(t=>{
+    const count = (Q[t.id]||[]).length;
+    const card = document.createElement('button');
+    card.className = 'topic-card' + (t.pink ? ' pink' : '');
+    card.innerHTML = `<span class="emoji">${t.emoji}</span><span><h4>${t.name}</h4><p>${t.sub} · ${count} سؤال</p></span>`;
+    card.onclick = ()=> startQuiz(t.id, t.name, 'cs-home');
+    grid.appendChild(card);
+  });
+}
+
+function renderEnTopics(){
+  const grid = document.getElementById('enTopicGrid');
+  grid.innerHTML = '';
+  EN_TOPICS.forEach(t=>{
+    const count = (Q[t.id]||[]).length;
+    const card = document.createElement('button');
+    card.className = 'topic-card' + (t.pink ? ' pink' : '');
+    card.innerHTML = `<span class="emoji">${t.emoji}</span><span><h4>${t.name}</h4><p>${t.sub} · ${count} سؤال</p></span>`;
+    card.onclick = ()=> startQuiz(t.id, t.name, 'en-home');
+    grid.appendChild(card);
+  });
+}
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+function startQuiz(topicId, topicName, backView){
+  state.topicId = topicId;
+  state.topicName = topicName;
+  state.backView = backView || 'cs-home';
+  state.list = shuffle(Q[topicId] || []);
+  state.idx = 0;
+  state.score = 0;
+  state.answered = false;
+  document.getElementById('view-home').classList.add('hidden');
+  document.getElementById('view-cs-home').classList.add('hidden');
+  document.getElementById('view-en-home').classList.add('hidden');
+  document.getElementById('view-result').classList.add('hidden');
+  document.getElementById('view-quiz').classList.remove('hidden');
+  document.getElementById('backBtn').classList.remove('hidden');
+  document.getElementById('backBtn').onclick=()=>goTo(state.backView);
+  document.getElementById('topbarTitle').textContent = topicName;
+  renderQuestion();
+  window.scrollTo(0,0);
+}
+
+function retryTopic(){ startQuiz(state.topicId, state.topicName, state.backView); }
+
+function renderQuestion(){
+  state.answered = false;
+  const q = state.list[state.idx];
+
+  const intro = TOPIC_INTRO[state.topicId];
+  const panel = document.getElementById('introPanel');
+  if(intro){
+    panel.classList.remove('hidden');
+    document.getElementById('introNoteAr').textContent = intro.ar;
+    document.getElementById('introNoteEn').textContent = intro.en;
+    document.getElementById('introText').textContent = intro.text || '';
+  } else {
+    panel.classList.add('hidden');
+  }
+
+  document.getElementById('quizTopicName').textContent = state.topicName;
+  document.getElementById('qtext').textContent = q[0];
+  const total = state.list.length;
+  document.getElementById('progressText').textContent = (state.idx+1) + ' / ' + total;
+  document.getElementById('scoreText').textContent = '✔ ' + state.score;
+  document.getElementById('progressFill').style.width = Math.round((state.idx/total)*100) + '%';
+
+  const optionsBox = document.getElementById('options');
+  optionsBox.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q[1].forEach((optText, i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.innerHTML = `<span class="tag">${letters[i]}.</span><span>${optText}</span>`;
+    btn.onclick = ()=> selectOption(i);
+    optionsBox.appendChild(btn);
+  });
+
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('nextBtn').disabled = true;
+  document.getElementById('nextBtn').textContent = (state.idx === total-1) ? 'عرض النتيجة' : 'السؤال التالي';
+}
+
+function selectOption(i){
+  if(state.answered) return;
+  state.answered = true;
+  const q = state.list[state.idx];
+  const correctIdx = q[2];
+  const opts = document.querySelectorAll('#options .opt');
+  opts.forEach((el,idx)=>{
+    el.classList.add('disabled');
+    if(idx===correctIdx) el.classList.add('correct');
+    if(idx===i && i!==correctIdx) el.classList.add('wrong');
+    if(idx!==correctIdx && idx!==i) el.classList.add('dim');
+  });
+
+  const isCorrect = (i === correctIdx);
+  if(isCorrect) state.score++;
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback show ' + (isCorrect ? 'ok' : 'no');
+  document.getElementById('fbTitle').textContent = isCorrect ? '✅ إجابة صحيحة! Correct!' : '❌ إجابة غير صحيحة — Incorrect';
+  document.getElementById('fbAr').textContent = 'الشرح: ' + q[3];
+  document.getElementById('fbEn').textContent = 'Explanation: ' + q[4];
+  document.getElementById('scoreText').textContent = '✔ ' + state.score;
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function nextQuestion(){
+  if(state.idx < state.list.length - 1){
+    state.idx++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult(){
+  document.getElementById('view-quiz').classList.add('hidden');
+  document.getElementById('view-result').classList.remove('hidden');
+  document.getElementById('backBtn').onclick=()=>goTo(state.backView);
+  const total = state.list.length;
+  const pct = Math.round((state.score/total)*100);
+  document.getElementById('resultScore').textContent = state.score + ' / ' + total + ' (' + pct + '%)';
+  let msg = 'أداء رائع! استمر بالتدريب.';
+  if(pct < 50) msg = 'راجع الموضوع مرة أخرى ثم أعد المحاولة.';
+  else if(pct < 80) msg = 'جيد جدًا! يمكنك التحسن أكثر بالمراجعة.';
+  document.getElementById('resultMsg').textContent = msg + '  Great effort — keep practicing!';
+}
+
+goTo('home');
+</script>
+</body>
+</html>
