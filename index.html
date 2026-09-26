@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -135,6 +136,17 @@
   .progress-track{height:8px;border-radius:99px;background:var(--blue-200);overflow:hidden;}
   .progress-fill{height:100%;background:linear-gradient(90deg,var(--blue-500),var(--pink-500,var(--pink-400)));border-radius:99px;transition:width .3s ease;}
   .progress-label{display:flex;justify-content:space-between;font-size:0.78rem;color:var(--muted);margin-top:6px;}
+  .jump-strip{display:flex;gap:6px;overflow-x:auto;margin-top:12px;padding-bottom:4px;}
+  .jump-dot{
+    flex:none;width:34px;height:34px;border-radius:10px;border:2px solid var(--blue-200);
+    background:var(--card);color:var(--muted);font-family:inherit;font-weight:700;font-size:0.82rem;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .jump-dot.current{border-color:var(--blue-700);color:var(--blue-700);box-shadow:0 0 0 2px var(--blue-200);}
+  .jump-dot.correct{background:var(--good-bg);border-color:var(--good);color:var(--good);}
+  .jump-dot.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad);}
+  .finish-link{display:block;text-align:center;margin-top:10px;font-size:0.82rem;color:var(--blue-700);
+    background:none;border:none;font-family:inherit;text-decoration:underline;cursor:pointer;width:100%;}
 
   .intro-panel{
     background:var(--pink-100);border:1px solid var(--pink-400);border-radius:14px;
@@ -177,7 +189,7 @@
   .expl-ar{direction:rtl;text-align:right;margin:0 0 8px;font-size:0.93rem;line-height:1.7;}
   .expl-en{direction:ltr;text-align:left;margin:0;font-size:0.9rem;line-height:1.6;color:var(--muted);}
 
-  .nextrow{display:flex;justify-content:flex-end;margin-top:18px;}
+  .nextrow{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:10px;}
   .nextbtn{
     border:none;background:linear-gradient(90deg,var(--blue-700),var(--pink-600));color:#fff;
     padding:11px 26px;border-radius:999px;font-family:inherit;font-weight:700;font-size:0.95rem;cursor:pointer;
@@ -246,6 +258,7 @@
       <p class="quiz-topic" id="quizTopicName"></p>
       <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
       <div class="progress-label"><span id="progressText">0 / 0</span><span id="scoreText">✔ 0</span></div>
+      <div class="jump-strip" id="jumpStrip"></div>
     </div>
     <div class="intro-panel hidden" id="introPanel">
       <p class="intro-note" id="introNoteAr"></p>
@@ -261,8 +274,10 @@
         <p class="expl-en" id="fbEn"></p>
       </div>
       <div class="nextrow">
+        <button class="ghostbtn" id="prevBtn" onclick="prevQuestion()">◀ السابق</button>
         <button class="nextbtn" id="nextBtn" disabled onclick="nextQuestion()">السؤال التالي</button>
       </div>
+      <button class="finish-link" onclick="showResult()">إنهاء وعرض النتيجة الآن · Finish now</button>
     </div>
   </div>
 
@@ -299,7 +314,9 @@ const EN_TOPICS = [
   {id:"grammar", name:"القواعد Grammar", sub:"Grammar", emoji:"📘", pink:false},
   {id:"vocabulary", name:"المفردات Vocabulary", sub:"Vocabulary", emoji:"🔤", pink:true},
   {id:"articles", name:"أدوات التعريف والأزمنة", sub:"Articles & Tenses", emoji:"🧩", pink:false},
-  {id:"reading", name:"الفهم القرائي", sub:"Reading Comprehension", emoji:"📖", pink:true},
+  {id:"review", name:"مراجعة شاملة", sub:"Comprehensive Review", emoji:"🧠", pink:true},
+  {id:"reading", name:"الفهم القرائي", sub:"Reading Comprehension", emoji:"📖", pink:false},
+  {id:"letter", name:"رسالة بول (قراءة)", sub:"Letter Reading", emoji:"✉️", pink:true},
 ];
 
 const TOPIC_INTRO = {
@@ -312,6 +329,11 @@ const TOPIC_INTRO = {
     ar: "تذكير: لا تُستخدم أداة تعريف قبل أسماء المدن والدول والقارات (Tokyo, Amman, Africa)، ولا في تعابير مثل go to prison / sleep at home، ولا قبل وجبات الطعام (breakfast, lunch, supper).",
     en: "Reminder: no article is used before cities/countries/continents (Tokyo, Amman, Africa), in expressions like 'go to prison' / 'sleep at home', or before meals (breakfast, lunch, supper).",
     text: ""
+  },
+  letter: {
+    ar: "اقرأ الرسالة التالية ثم أجب عن الأسئلة التي تليها.",
+    en: "Read the following letter, then answer the questions below.",
+    text: "Dear Paul,\n\nI am sorry I have not written for a while, but it was great to hear from you today about your holidays. I am so glad that you liked the book on Jordan.\n\nNo, my father does not always wear traditional (1) ______. In fact, he usually wears a suit for the office and only wears a \"dishdash\" in the (2) ______ when he is relaxing."
   }
 };
 
@@ -957,8 +979,138 @@ Q.reading = [
 "النص يذكر أن للقهوة مكانة اجتماعية وطقسية في شبه الجزيرة العربية.","The passage states coffee has a ceremonial and social place in Arabia."]
 ];
 
+Q.review = [
+["Sarah uses ____ phone everyday.",["Her","His","Heres","She"],0,
+"نستخدم Her (صفة ملكية) قبل الاسم لأن المالكة أنثى (Sarah).","We use 'her' (possessive adjective) before the noun since the owner is female (Sarah)."],
+["Me and my friends are leaving the school tomorrow, ____ new school is in another city.",["His","There","We","Our"],3,
+"نستخدم Our قبل الاسم للدلالة على ملكية جماعية (نحن).","We use 'our' before the noun to show group possession (we)."],
+["What ____ your father ____? He is a manager.",["Do / Do","Is / Do","Did / Do","Does / Do"],3,
+"في سؤال عن الوظيفة نستخدم Does مع الغائب المفرد ثم Do مع الفعل الأساسي.","For asking about a job with third person, we use 'Does', then 'do' as the main verb."],
+["The doctor ____ yet.",["Have not come","Had not come","Had not came","Has not come"],3,
+"زمن المضارع التام (has not come) يُستخدم مع yet.","Present perfect (has not come) is used with 'yet'."],
+["This building was built ____ 1870.",["In","On","For","Since"],0,
+"نستخدم In مع السنوات.","We use 'in' with years."],
+["Do you like classical books?",["Yes, I like.","Yes, I do.","Yes, I does.","Yes, I likes."],1,
+"نجيب عن أسئلة Do بـ Yes, I do.","We answer 'Do' questions with 'Yes, I do'."],
+["Is that car ____? No it isn't.",["They","There","Their","They're"],1,
+"There ظرف مكان بمعنى هناك: هل السيارة هناك؟","'There' is an adverb of place meaning 'in that place': Is that car there?"],
+["July, ____, September, October.",["August","January","March","November"],0,
+"الشهر بين يوليو وسبتمبر هو أغسطس.","The month between July and September is August."],
+["I have lived in Riyadh ____ last year.",["Since","For","In","When"],0,
+"نستخدم Since مع نقطة زمنية محددة في الماضي مع المضارع التام.","We use 'since' with a specific point in the past with present perfect."],
+["If she had studied hard, she ____ the exam.",["Would have passed","Would pass","Passed","Will pass"],0,
+"الشرط الثالث (Third Conditional) يستخدم would have + التصريف الثالث.","Third conditional uses 'would have' + past participle."],
+["He'll ____ many tasks in the weekend.",["Caused","Make","Do","Cause"],2,
+"نقول Do tasks بمعنى إنجاز مهام.","We say 'do tasks' meaning to complete tasks."],
+["Could you ____ me some money, please?",["Bring","Lend","Land","Borrow"],1,
+"Lend تعني تُقرض شخصًا آخر (تعطيه مؤقتًا).","'Lend' means to give something to someone temporarily."],
+["What ____? I work in a bookstore.",["Are you doing","Do you","Are you do","Do you do"],3,
+"للسؤال عن المهنة نقول What do you do?","To ask about someone's job, we say 'What do you do?'"],
+["They ____ watching TV when I arrived.",["Was","Were","Are","Is"],1,
+"مع الجمع (They) في الماضي المستمر نستخدم Were.","With plural subjects (they) in past continuous, we use 'were'."],
+["She usually ____ her homework in the evening.",["Do","Does","Doing","Done"],1,
+"مع الغائب المفرد (She) يصبح فعل do هو does.","With third person singular (she), 'do' becomes 'does'."],
+["Omar is taller than his brother, who is shorter?",["Omar","His brother","They are equal","Not mentioned"],1,
+"بما أن عمر أطول، فأخوه هو الأقصر.","Since Omar is taller, his brother is the shorter one."],
+["The sun rises in the east and sets in the west, where does the sun set?",["North","East","South","West"],3,
+"النص يذكر أن الشمس تغرب في الغرب.","The sentence states the sun sets in the west."],
+["The opposite of 'ancient' is:",["Modern","Old","Historic","Antique"],0,
+"عكس قديم (Ancient) هو حديث (Modern).","The opposite of 'ancient' is 'modern'."],
+["He is a very ____ student, he always does his homework.",["describe","description","descriptive","describing"],2,
+"الفراغ يحتاج صفة قبل الاسم student، والصفة المشتقة من describe هي descriptive.","The blank needs an adjective before 'student'; the adjective form of 'describe' is 'descriptive'."],
+["This exam is very ____, so don't worry about it.",["difficulty","difficult","difficulties","difficultly"],1,
+"بعد very نحتاج صفة، وصفة الصعوبة هي difficult.","After 'very' we need an adjective; the adjective form is 'difficult'."],
+["You must boil those vegetables before ____ in the stew.",["Using them","Their used","The use","Using"],0,
+"بعد حرف الجر before نستخدم فعل ing مع ضمير المفعول them.","After the preposition 'before', use verb-ing with the object pronoun 'them'."],
+["I've got a new dishwasher and a fridge in my ____",["Study","Kitchen","Bathroom","Office"],1,
+"غسالة الصحون والثلاجة توجد في المطبخ.","A dishwasher and fridge are found in the kitchen."],
+["They have ____ all efforts to buy the house.",["Done","Made","Formed","Caused"],1,
+"نقول Make an effort بمعنى بذل جهد.","We say 'make an effort' meaning to try hard."],
+["What's his job? He's ____.",["A seller","An seller","The seller","Seller"],0,
+"قبل مهنة تبدأ بصوت ساكن نستخدم A.","Before a job starting with a consonant sound, we use 'a'."],
+["I have ____ a photo with my letter.",["Proposed","Imposed","Enclosed","Closed"],2,
+"Enclosed تعني أرفقتُ شيئًا مع الرسالة.","'Enclosed' means included something along with the letter."],
+["The opposite of the word 'regular' is ____",["Irregular","Disrgular","Inregular","Misregular"],0,
+"بادئة ir- تُستخدم مع كلمات تبدأ بحرف r لتكوين العكس.","The prefix 'ir-' is used with words starting with 'r' to form the opposite."],
+["He looked at the silver axe, ____ he chose the wooden one.",["And","So","But","Both"],2,
+"But تدل على تناقض بين فعلين.","'But' shows a contrast between two actions."],
+["I have an appointment with the doctor ____ tomorrow.",["In","On","At","No preposition needed"],3,
+"لا نحتاج حرف جر قبل tomorrow.","No preposition is needed before 'tomorrow'."],
+["A ____ is a person who visits other countries.",["Horseman","Guest","Motorist","Tourist"],3,
+"الشخص الذي يزور بلدانًا أخرى يُسمى سائح (Tourist).","A person who visits other countries is called a tourist."],
+["This medicine really ____ a cough.",["Cures","Cares","Crosses","Curses"],0,
+"Cures تعني يعالج أو يشفي من مرض.","'Cures' means to heal or treat an illness."],
+["Fahed has been studying here ____",["For six months","Before six months","Since six months","Six months ago"],0,
+"نستخدم For مع فترة زمنية مع المضارع التام.","We use 'for' with a duration of time in present perfect."],
+["You shouldn't speak ill ____ the dead.",["With","For","About","Of"],3,
+"التعبير الثابت هو speak ill of someone.","The fixed expression is 'speak ill of' someone."],
+["He gave me a present ____ my anniversary.",["In","On","With","At"],1,
+"نستخدم On مع المناسبات والأيام المحددة.","We use 'on' with specific occasions and days."],
+["What ____ when the phone rang?",["Where you doing","Will you do","Do you do","Was you doing"],3,
+"الصيغة الصحيحة قياسيًا هي Were you doing، والخيار الأقرب هنا Was you doing.","The standard correct form is 'were you doing'; the closest available option here is 'was you doing'."],
+["Where can I buy some envelopes? At the ____",["Grocers","Bakers","Library","Newsagents"],3,
+"تُباع المغلفات في محل الصحف (Newsagents).","Envelopes are sold at the newsagents."],
+["My favorite ____ is tea.",["Food","Drink","Meal","Lunch"],1,
+"الشاي مشروب (Drink).","Tea is a drink."],
+["She's ____ a purple coat and a blue scarf.",["Wearing","Putting","Looking","Seeing"],0,
+"نقول Wearing لوصف ارتداء الملابس.","We say 'wearing' to describe having clothes on."],
+["The hotel was so awful that we wrote a letter of ____ to the agency.",["Relief","Complaint","Thanks","Warning"],1,
+"نكتب letter of complaint للشكوى.","We write a 'letter of complaint' to express dissatisfaction."],
+["Six, seven, ____, nine.",["Three","Five","Twelve","Eight"],3,
+"الرقم بين سبعة وتسعة هو ثمانية.","The number between seven and nine is eight."],
+["Can I ____ your car, please!",["Borrow","Lend","Land","Give"],0,
+"Borrow تعني تستعير شيئًا من شخص آخر مؤقتًا.","'Borrow' means to take something from someone temporarily."],
+["She's ____ her lovely novels.",["Listening","Seeing","Watching","Reading"],3,
+"نقرأ الروايات (Reading novels).","We read novels (reading)."],
+["I'd like a ____ of coffee, please.",["Plate","Bottle","Cup","Glass"],2,
+"نقول Cup of coffee (فنجان قهوة).","We say 'a cup of coffee'."],
+["I'm really ____ to the party, all my old friends will be there.",["Appreciating","Looking forward","Thinking about","Enjoying"],1,
+"Looking forward to تعني نتطلع بشوق لشيء قادم.","'Looking forward to' means eagerly anticipating something."],
+["I'm afraid we have had to ____ the flight because of bad weather conditions.",["Take off","Confirm","Cancel","Stop"],2,
+"Cancel تعني إلغاء الرحلة.","'Cancel' means to call off the flight."],
+["The religious wedding ____ takes place in a church.",["Marriage","Engagement","Performance","Ceremony"],3,
+"المناسبة الدينية للزواج تُسمى Ceremony.","The religious event of marriage is called a 'ceremony'."],
+["You can't ____ on him at all, he never does what he says.",["Arrange","Collaborate","Tolerate","Rely"],3,
+"Rely on تعني تعتمد على شخص.","'Rely on' means to depend on someone."],
+["We have got two ____: a son and a daughter.",["Friends","Children","People","Parents"],1,
+"الابن والابنة هما أطفال (Children).","A son and a daughter are children."],
+["It's very ____ in here, I can't hear anything.",["Noisy","Exciting","Clean","Quiet"],3,
+"الهدوء الشديد يجعلنا لا نسمع شيئًا (Quiet).","Extreme quietness means we can't hear anything."],
+["He lets his wife do everything for him, he's very ____",["Careful","Lazy","Quite","Bored"],1,
+"من يترك زوجته تفعل كل شيء يُوصف بالكسل (Lazy).","Letting someone else do everything for you shows laziness."],
+["____ bag is this? It's mine!",["Who","Who's","Whose","Whats"],2,
+"نسأل عن المالك بأداة Whose.","We ask about ownership using 'whose'."],
+["You ____ show your passport at the frontier if you want to get across.",["Are supposed to","Are allowed to","Have to","Should"],2,
+"الإلزام القوي يُعبَّر عنه بـ Have to.","Strong obligation is expressed with 'have to'."],
+["We didn't stay late ____ we were very tired.",["That","Is","Until","Because"],3,
+"Because تربط سببًا بنتيجته.","'Because' connects a reason with its result."],
+["He always ____ his mother.",["Visit","Visites","Visits","Visited"],2,
+"مع الغائب المفرد (He) نضيف s للفعل في المضارع البسيط.","With third person singular (he), add -s to the verb."],
+["I ____ rice and bread.",["Rarely eat","Eats rarely","Eat rarely","Rarely ate"],0,
+"الظرف rarely يأتي قبل الفعل الأساسي مباشرة.","The adverb 'rarely' comes directly before the main verb."],
+["She is ____ at this moment.",["Smoke","Smoked","Eat","Smoking"],3,
+"at this moment تدل على المضارع المستمر (Smoking).","'At this moment' signals the present continuous (smoking)."],
+["I ____ how to solve this problem now.",["Am knowing","Know","Knew","Knowing"],1,
+"Know فعل ثبوتي (Stative Verb) ولا يُستخدم في زمن مستمر، فالصحيح هو Know وليس Am knowing.","'Know' is a stative verb and isn't used in continuous form, so the correct answer is 'know', not 'am knowing'."],
+["The teacher ____ his students next Monday.",["Will see","Have seen","Saw","See"],0,
+"next Monday يدل على المستقبل (Will see).","'Next Monday' signals the future (will see)."],
+["All of these sentences are right except one:",["I have done my work already.","I have just had my dinner.","It has been raining for 6 hours.","She has already have her dinner."],3,
+"الجملة الخاطئة هي d لأن الصحيح has already had، فالفعل have لا يتكرر مرتين.","Sentence d is wrong; it should be 'has already had' — you can't repeat 'have' twice."],
+["Did you ____ me on TV yesterday?",["See","Saw","Watched","Told"],0,
+"بعد Did نستخدم الفعل المجرد.","After 'Did', use the base form of the verb."]
+];
+
+Q.letter = [
+["The suitable word in blank number one is:",["dress","coat","shirt","suit"],0,
+"الزي التقليدي يُسمى Traditional dress، وهذا هو المقصود بالفراغ الأول.","Traditional clothing is called 'traditional dress' — that's the missing word."],
+["The suitable word in blank number two is:",["farm","house","flat","shirt"],1,
+"يرتدي الدشداشة في المنزل عند الاسترخاء، فالكلمة المناسبة هي House.","He wears the dishdash at home while relaxing, so the suitable word is 'house'."],
+["What is the discourse function of this letter?",["Telling information","Asking for a job","Asking for something else","Knowing information"],0,
+"الرسالة تنقل معلومات عن والد الكاتب وملابسه، فوظيفتها نقل معلومة.","The letter conveys information about the writer's father and his clothing — its function is telling information."]
+];
+
 /* ===================== APP LOGIC ===================== */
-let state = { topicId:null, list:[], idx:0, score:0, answered:false };
+let state = { topicId:null, topicName:'', backView:'cs-home', list:[], idx:0, answers:[] };
 
 function goTo(view){
   document.getElementById('view-home').classList.add('hidden');
@@ -1013,8 +1165,7 @@ function startQuiz(topicId, topicName, backView){
   state.backView = backView || 'cs-home';
   state.list = shuffle(Q[topicId] || []);
   state.idx = 0;
-  state.score = 0;
-  state.answered = false;
+  state.answers = new Array(state.list.length).fill(null); // null = unanswered, else {selected}
   document.getElementById('view-home').classList.add('hidden');
   document.getElementById('view-cs-home').classList.add('hidden');
   document.getElementById('view-en-home').classList.add('hidden');
@@ -1029,9 +1180,31 @@ function startQuiz(topicId, topicName, backView){
 
 function retryTopic(){ startQuiz(state.topicId, state.topicName, state.backView); }
 
+function currentScore(){
+  let s = 0;
+  state.answers.forEach((a,i)=>{ if(a && a.selected === state.list[i][2]) s++; });
+  return s;
+}
+
+function renderJumpStrip(){
+  const strip = document.getElementById('jumpStrip');
+  strip.innerHTML = '';
+  state.list.forEach((q,i)=>{
+    const dot = document.createElement('button');
+    const a = state.answers[i];
+    let cls = 'jump-dot';
+    if(i === state.idx) cls += ' current';
+    else if(a) cls += (a.selected === q[2]) ? ' correct' : ' wrong';
+    dot.className = cls;
+    dot.textContent = (i+1);
+    dot.onclick = ()=>{ state.idx = i; renderQuestion(); };
+    strip.appendChild(dot);
+  });
+}
+
 function renderQuestion(){
-  state.answered = false;
   const q = state.list[state.idx];
+  const savedAnswer = state.answers[state.idx];
 
   const intro = TOPIC_INTRO[state.topicId];
   const panel = document.getElementById('introPanel');
@@ -1048,48 +1221,49 @@ function renderQuestion(){
   document.getElementById('qtext').textContent = q[0];
   const total = state.list.length;
   document.getElementById('progressText').textContent = (state.idx+1) + ' / ' + total;
-  document.getElementById('scoreText').textContent = '✔ ' + state.score;
-  document.getElementById('progressFill').style.width = Math.round((state.idx/total)*100) + '%';
+  document.getElementById('scoreText').textContent = '✔ ' + currentScore();
+  document.getElementById('progressFill').style.width = Math.round(((state.idx+1)/total)*100) + '%';
+  renderJumpStrip();
 
   const optionsBox = document.getElementById('options');
   optionsBox.innerHTML = '';
   const letters = ['A','B','C','D'];
+  const correctIdx = q[2];
   q[1].forEach((optText, i)=>{
     const btn = document.createElement('button');
-    btn.className = 'opt';
+    let cls = 'opt';
+    if(savedAnswer){
+      cls += ' disabled';
+      if(i===correctIdx) cls += ' correct';
+      if(i===savedAnswer.selected && i!==correctIdx) cls += ' wrong';
+      if(i!==correctIdx && i!==savedAnswer.selected) cls += ' dim';
+    }
+    btn.className = cls;
     btn.innerHTML = `<span class="tag">${letters[i]}.</span><span>${optText}</span>`;
     btn.onclick = ()=> selectOption(i);
     optionsBox.appendChild(btn);
   });
 
-  document.getElementById('feedback').className = 'feedback';
-  document.getElementById('nextBtn').disabled = true;
-  document.getElementById('nextBtn').textContent = (state.idx === total-1) ? 'عرض النتيجة' : 'السؤال التالي';
+  const fb = document.getElementById('feedback');
+  if(savedAnswer){
+    const isCorrect = savedAnswer.selected === correctIdx;
+    fb.className = 'feedback show ' + (isCorrect ? 'ok' : 'no');
+    document.getElementById('fbTitle').textContent = isCorrect ? '✅ إجابة صحيحة! Correct!' : '❌ إجابة غير صحيحة — Incorrect';
+    document.getElementById('fbAr').textContent = 'الشرح: ' + q[3];
+    document.getElementById('fbEn').textContent = 'Explanation: ' + q[4];
+  } else {
+    fb.className = 'feedback';
+  }
+
+  document.getElementById('prevBtn').style.visibility = (state.idx === 0) ? 'hidden' : 'visible';
+  document.getElementById('nextBtn').disabled = !savedAnswer;
+  document.getElementById('nextBtn').textContent = (state.idx === total-1) ? 'عرض النتيجة' : 'السؤال التالي ▶';
 }
 
 function selectOption(i){
-  if(state.answered) return;
-  state.answered = true;
-  const q = state.list[state.idx];
-  const correctIdx = q[2];
-  const opts = document.querySelectorAll('#options .opt');
-  opts.forEach((el,idx)=>{
-    el.classList.add('disabled');
-    if(idx===correctIdx) el.classList.add('correct');
-    if(idx===i && i!==correctIdx) el.classList.add('wrong');
-    if(idx!==correctIdx && idx!==i) el.classList.add('dim');
-  });
-
-  const isCorrect = (i === correctIdx);
-  if(isCorrect) state.score++;
-
-  const fb = document.getElementById('feedback');
-  fb.className = 'feedback show ' + (isCorrect ? 'ok' : 'no');
-  document.getElementById('fbTitle').textContent = isCorrect ? '✅ إجابة صحيحة! Correct!' : '❌ إجابة غير صحيحة — Incorrect';
-  document.getElementById('fbAr').textContent = 'الشرح: ' + q[3];
-  document.getElementById('fbEn').textContent = 'Explanation: ' + q[4];
-  document.getElementById('scoreText').textContent = '✔ ' + state.score;
-  document.getElementById('nextBtn').disabled = false;
+  if(state.answers[state.idx]) return; // already answered, locked
+  state.answers[state.idx] = { selected: i };
+  renderQuestion();
 }
 
 function nextQuestion(){
@@ -1101,16 +1275,26 @@ function nextQuestion(){
   }
 }
 
+function prevQuestion(){
+  if(state.idx > 0){
+    state.idx--;
+    renderQuestion();
+  }
+}
+
 function showResult(){
   document.getElementById('view-quiz').classList.add('hidden');
   document.getElementById('view-result').classList.remove('hidden');
   document.getElementById('backBtn').onclick=()=>goTo(state.backView);
   const total = state.list.length;
-  const pct = Math.round((state.score/total)*100);
-  document.getElementById('resultScore').textContent = state.score + ' / ' + total + ' (' + pct + '%)';
+  const score = currentScore();
+  const answeredCount = state.answers.filter(a=>a).length;
+  const pct = Math.round((score/total)*100);
+  document.getElementById('resultScore').textContent = score + ' / ' + total + ' (' + pct + '%)';
   let msg = 'أداء رائع! استمر بالتدريب.';
   if(pct < 50) msg = 'راجع الموضوع مرة أخرى ثم أعد المحاولة.';
   else if(pct < 80) msg = 'جيد جدًا! يمكنك التحسن أكثر بالمراجعة.';
+  if(answeredCount < total) msg = 'لم تُجب على كل الأسئلة (' + answeredCount + ' من ' + total + '). ' + msg;
   document.getElementById('resultMsg').textContent = msg + '  Great effort — keep practicing!';
 }
 
